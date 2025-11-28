@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sana Bir Şey Söylemek İstiyorum</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: "Helvetica", sans-serif;
+        background: #ffeef3;
+        overflow-x: hidden;
+        position: relative;
+    }
+
+    /* Daha yoğun ve görünür çiçek arka plan */
+    .flower-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        background-image: url('https://png.pngtree.com/png-vector/20220607/ourmid/pngtree-floral-watercolor-pastel-flowers-transparent-background-png-image_4852073.png');
+        background-size: 450px;
+        background-repeat: repeat;
+        opacity: 0.28; /* daha görünür */
+        z-index: -2;
+        animation: floralMove 60s linear infinite;
+    }
+
+    @keyframes floralMove {
+        0% { transform: translateY(0) rotate(0deg); }
+        100% { transform: translateY(-300px) rotate(6deg); }
+    }
+
+    /* Ekstra: Uçuşan çiçek parçacıkları */
+    .petal {
+        position: fixed;
+        top: -20px;
+        left: calc(5% + 12% * var(--i));
+        width: 34px;
+        opacity: 0.9;
+        animation: petalFall 10s linear infinite;
+        animation-delay: calc(-1s * var(--i));
+        pointer-events: none;
+    }
+
+    @keyframes petalFall {
+        0% { transform: translateY(-40px) rotate(0deg); opacity: 0.9; }
+        100% { transform: translateY(110vh) rotate(40deg); opacity: 0; }
+    }
+
+    /* Ana kart */
+    .card {
+        background: rgba(255,255,255,0.92);
+        padding: 35px;
+        max-width: 560px;
+        width: 90%;
+        margin: 80px auto;
+        border-radius: 18px;
+        box-shadow: 0 8px 30px rgba(255, 0, 90, 0.20);
+        text-align: center;
+        backdrop-filter: blur(8px);
+        position: relative;
+        animation: fadeIn 1.2s ease;
+    }
+
+    h1 {
+        margin-bottom: 15px;
+        font-size: 30px;
+        color: #c8004c;
+        font-weight: bold;
+    }
+
+    p {
+        line-height: 1.7;
+        margin-bottom: 15px;
+        font-size: 17px;
+        color: #444;
+    }
+
+    /* Kart üstündeki küçük çiçekler */
+    .flower-small {
+        position: absolute;
+        width: 85px;
+        top: -45px;
+        opacity: 0.35;
+    }
+    .flower-left { left: -25px; transform: rotate(-15deg); }
+    .flower-right { right: -25px; transform: rotate(15deg); }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(25px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Mobil uyum */
+    @media (max-width: 480px) {
+        h1 { font-size: 25px; }
+        p { font-size: 16px; }
+        .flower-small { width: 60px; }
+    }
+
+    /* Müzik butonu */
+    #musicBtn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #ff5c8a;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 55px;
+        height: 55px;
+        font-size: 22px;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+        cursor: pointer;
+        z-index: 1000;
+    }
+</style>
+</head>
+
+<body>
+
+<!-- Yoğun çiçek arka plan -->
+<div class="flower-bg"></div>
+
+<!-- Ekstra uçuşan çiçek parçacıkları -->
+<img class="petal" style="--i:1" src="https://emojigraph.org/media/apple/heart-on-fire_2764-fe0f-200d-1f525.png">
+<img class="petal" style="--i:2" src="https://emojigraph.org/media/apple/heart-on-fire_2764-fe0f-200d-1f525.png">
+<img class="petal" style="--i:3" src="https://emojigraph.org/media/apple/heart-on-fire_2764-fe0f-200d-1f525.png">
+<img class="petal" style="--i:4" src="https://emojigraph.org/media/apple/heart-on-fire_2764-fe0f-200d-1f525.png">
+<img class="petal" style="--i:5" src="https://emojigraph.org/media/apple/heart-on-fire_2764-fe0f-200d-1f525.png">
+<img class="petal" style="--i:6" src="https://emojigraph.org/media/apple/heart-on-fire_2764-fe0f-200d-1f525.png">
+
+<!-- Soft müzik -->
+<audio id="bgMusic" loop>
+    <source src="https://mp3semti.com/dinle/Nahide-Babasli-Soz-Verdim" type="audio/mpeg">
+</audio>
+
+<button id="musicBtn">🎵</button>
+
+<script>
+    const music = document.getElementById("bgMusic");
+    const btn = document.getElementById("musicBtn");
+
+    // Otomatik başlat (mobilde sessiz başlayıp açılıyor)
+    window.addEventListener("load", () => {
+        music.muted = true;
+        music.play().then(() => {
+            setTimeout(() => music.muted = false, 500);
+        }).catch(() => {});
+    });
+
+    btn.onclick = () => {
+        if (music.paused) music.play();
+        else music.pause();
+    };
+</script>
+
+<div class="card">
+    <img src="https://symbl-cdn.com/i/webp/64/82dd09ea47ca20039bdbd4e109ccfe.webp" class="flower-small flower-left">
+    <img src="https://symbl-cdn.com/i/webp/64/82dd09ea47ca20039bdbd4e109ccfe.webp" class="flower-small flower-right">
+
+    <h1>Sana İçten Bir Şey Söylemek İstiyorum…</h1>
+
+    <p>Sana bunları yazmak benim için kolay değil…
+Ama yaptığım hatayla seni ne kadar incittiğimi biliyorum ve bunu gerçekten içimde hissediyorum.
+
+Sana karşı dürüst olmadığım için, güvenini kırdığım için, seni böyle bir acının içine soktuğum için özür dilerim.
+Bunun hiçbir bahanesi yok ve ben de bunu biliyorum.
+Yaptığım şey, senin hak etmediğin bir kırgınlıktı.
+
+Bu mesajı yazmamın tek nedeni sana baskı yapmak değil…
+Sadece, içimde tuttuğum gerçek duyguları doğru şekilde ifade etmek istedim.
+Seni üzdüğüm için kalbim gerçekten çok sıkışıyor.
+Keşke zamanı geri alabilsem, ama tek yapabileceğim şey hatamın sorumluluğunu almak ve kendimi değiştirmek için çaba göstermek.
+
+Affetmen için acele etmiyorum, senden bir şey talep etmiyorum.
+Sadece bil istiyorum:
+Seni kırdığım gün ben de kendime kızdım.
+Ve bu süreçte gerçekten kendimle yüzleştim.
+
+Eğer bir gün hazır olduğunda konuşmak istersen ben buradayım.
+Hazır olmadığını söylersen buna da saygı duyarım.
+Sen nasıl istersen… nasıl doğru hissedersen öyle olsun.
+
+Dediğimiz gibi, eskisinden daha iyi olmak, daha samimi olmak ve her durumda yanında olmak istiyorum.
+
+Bir kez daha…
+Seni kırdığım için gerçekten çok üzgünüm.
+
+Ve bunları okuduğuna dair bana küçük bir mesaj bile atsan mutlu olurum. Seni çok seviyorum.</p>
+
+    <p><strong>— Can</strong></p>
+</div>
+
+
+<div id="lockScreen" style="
+    position:fixed; top:0; left:0; width:100%; height:100%;
+    background:#ffe6ef; display:flex; flex-direction:column;
+    justify-content:center; align-items:center; z-index:9999;
+    font-family:Helvetica, sans-serif;">
+    
+    <h2 style="color:#c8004c; margin-bottom:15px;">💗 Özledim Ceydammmm 💗</h2>
+    <p style="margin-bottom:10px;">(her zamanki kullandığımız şifre güzelim)</p>
+    
+    <input id="passInput" type="password" placeholder="Parola"
+    style="padding:10px 15px; border-radius:8px; border:1px solid #ccc; outline:none;">
+    
+    <button onclick="checkPass()" style="
+        margin-top:12px; padding:10px 20px; border:none; 
+        background:#ff5c8a; color:white; border-radius:8px; cursor:pointer;">
+        Giriş
+    </button>
+
+    <p id="wrong" style="color:red; margin-top:12px; display:none;">unutmuş olamazsın 23..? ❌</p>
+</div>
+
+<script>
+    function checkPass() {
+        var correct = "23683368"; // BURAYA PAROLANI YAZ
+        var inp = document.getElementById("passInput").value;
+
+        if (inp === correct) {
+            document.getElementById("lockScreen").style.display = "none";
+        } else {
+            document.getElementById("wrong").style.display = "block";
+        }
+    }
+</script>
+
+</body>
+</html>
