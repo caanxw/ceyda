@@ -167,7 +167,7 @@
             aspect-ratio: 1; background: var(--accent); border-radius: 10px; font-size: 2rem;
             display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s;
         }
-        .pop-container { height: 220px; position: relative; overflow: hidden; background: #fff0f3; border-radius: 12px; margin-top: 15px; }
+        .pop-container { height: 220px; position: relative; overflow: hidden; background: #fff0f3; border-radius: 12px; margin-top: 15px; touch-action: none; }
         .pop-heart { position: absolute; font-size: 2rem; color: var(--primary); cursor: pointer; user-select: none; }
     </style>
 </head>
@@ -272,7 +272,7 @@
                     <button class="btn-ep active" onclick="changeEpisode('5pLiSY5l8uE', this)">1. Bölüm</button>
                     <button class="btn-ep" onclick="changeEpisode('k1X8xW9E_gI', this)">2. Bölüm</button>
                     <button class="btn-ep" onclick="changeEpisode('I9S2p2iK0iE', this)">3. Bölüm</button>
-                    <button class="btn-ep" onclick="changeEpisode('videoseries?list=PLBkw3_T3W_m0u44pI29kU0YJ4Jm5pYv7m', this)">Playlist Oynat</button>
+                    <button class="btn-ep" onclick="changeEpisode('videoseries?list=PLBkw3_T3W_m0u44pI29kU0YJ4Jm5pYv7m', this)">Tüm Bölümler (Playlist)</button>
                 </div>
 
                 <div style="text-align: center; margin-top: 15px;">
@@ -359,7 +359,11 @@
             const directLink = document.getElementById('ytDirectLink');
             
             iframe.src = `https://www.youtube-nocookie.com/embed/${videoPath}?rel=0&modestbranding=1`;
-            directLink.href = `https://www.youtube.com/watch?v=${videoPath}`;
+            if(videoPath.includes('videoseries')) {
+                directLink.href = `https://www.youtube.com/playlist?list=PLBkw3_T3W_m0u44pI29kU0YJ4Jm5pYv7m`;
+            } else {
+                directLink.href = `https://www.youtube.com/watch?v=${videoPath}`;
+            }
         }
 
         /* ÇİZİM TUVALİ */
@@ -368,10 +372,12 @@
             canvas = document.getElementById('loveCanvas');
             if(!canvas) return;
             ctx = canvas.getContext('2d');
-            ctx.strokeStyle = '#ff4b72'; ctx.lineWidth = 3;
+            ctx.strokeStyle = '#ff4b72'; ctx.lineWidth = 3; ctx.lineCap = 'round';
+            
             canvas.addEventListener('mousedown', () => drawing = true);
             canvas.addEventListener('mouseup', () => { drawing = false; ctx.beginPath(); });
             canvas.addEventListener('mousemove', draw);
+            
             canvas.addEventListener('touchstart', (e) => { drawing = true; e.preventDefault(); });
             canvas.addEventListener('touchend', () => { drawing = false; ctx.beginPath(); });
             canvas.addEventListener('touchmove', (e) => {
@@ -412,19 +418,20 @@
             photos.forEach(src => {
                 const div = document.createElement('div');
                 div.className = 'polaroid';
-                div.innerHTML = `<img src="${src}"><p style="font-family:'Dancing Script'; font-size: 1.1rem; margin-top:4px;">Bizim Anımız ❤️</p>`;
+                div.innerHTML = `<img src="${src}"><p style="font-family:'Dancing Script'; font-size: 1.1rem; margin-top:4px;">Bizim Anımız ❤️️</p>`;
                 slider.appendChild(div);
             });
         }
 
         /* 8 MİNİ OYUN MANTIĞI */
         let gameInterval = null;
+        let sX = 90, sY = 90, foodX = 30, foodY = 30;
 
         function openGame(gameType) {
             const modal = document.getElementById('gameModal');
             const container = document.getElementById('gameContainer');
             modal.style.display = 'flex';
-            clearInterval(gameInterval);
+            if(gameInterval) clearInterval(gameInterval);
 
             if(gameType === 'escapeBtn') {
                 container.innerHTML = `
@@ -447,9 +454,9 @@
                     <h3>Aşk Quizi ❤️</h3>
                     <p style="margin-top:10px;">Benim en sevdiğim özelliğin nedir?</p>
                     <div style="display:flex; flex-direction:column; gap:8px; margin-top:15px;">
-                        <button class="btn-love" style="background:white; color:var(--primary); border:1px solid var(--primary);" onclick="alert('Doğru cevap! Hepsi benim için çok özel ❤️')">A) Sıcacık Gülüşün</button>
-                        <button class="btn-love" style="background:white; color:var(--primary); border:1px solid var(--primary);" onclick="alert('Doğru cevap! Hepsi benim için çok özel ❤️️')">B) Kocaman Merhametli Kalbin</button>
-                        <button class="btn-love" style="background:white; color:var(--primary); border:1px solid var(--primary);" onclick="alert('Doğru cevap! Hepsi benim için çok özel ❤️')">C) Hepsi!</button>
+                        <button class="btn-love" style="background:white; color:var(--primary); border:1px solid var(--primary);" onclick="alert('Doğru cevap! Sıcacık gülüşün benim her şeyim ❤️')">A) Sıcacık Gülüşün</button>
+                        <button class="btn-love" style="background:white; color:var(--primary); border:1px solid var(--primary);" onclick="alert('Doğru cevap! Kocaman merhametli kalbin benim huzurum ❤️')">B) Kocaman Merhametli Kalbin</button>
+                        <button class="btn-love" style="background:white; color:var(--primary); border:1px solid var(--primary);" onclick="alert('Tam isabet! Hepsi benim için çok özel ❤️')">C) Hepsi!</button>
                     </div>
                 `;
             }
@@ -474,7 +481,7 @@
                 `;
                 const grid = document.getElementById('memoryGrid');
                 let flipped = [];
-                icons.forEach((icon, idx) => {
+                icons.forEach((icon) => {
                     const card = document.createElement('div');
                     card.className = 'memory-card';
                     card.innerText = '❓';
@@ -527,45 +534,63 @@
                     <h3>Kalp Yakalama 🧺</h3>
                     <p>Skor: <span id="catchScore">0</span></p>
                     <div class="pop-container" id="catchBox">
-                        <div id="basket" style="position:absolute; bottom:5px; left:40%; font-size:2rem;">🧺</div>
+                        <div id="basket" style="position:absolute; bottom:5px; left:40%; font-size:2rem; transition: left 0.05s ease;">🧺</div>
                     </div>
                 `;
                 let score = 0;
                 const box = document.getElementById('catchBox');
                 const basket = document.getElementById('basket');
                 
-                box.onmousemove = (e) => {
+                const moveBasket = (clientX) => {
                     const rect = box.getBoundingClientRect();
-                    basket.style.left = (e.clientX - rect.left - 20) + 'px';
+                    let posX = clientX - rect.left - 20;
+                    if(posX < 0) posX = 0;
+                    if(posX > rect.width - 40) posX = rect.width - 40;
+                    basket.style.left = posX + 'px';
+                };
+
+                box.onmousemove = (e) => moveBasket(e.clientX);
+                box.ontouchmove = (e) => {
+                    if(e.touches.length > 0) moveBasket(e.touches[0].clientX);
                 };
 
                 gameInterval = setInterval(() => {
                     if(!box) return;
                     const item = document.createElement('div');
                     item.innerText = '❤️';
-                    item.style.position = 'absolute'; item.style.top = '0px';
-                    item.style.left = Math.random() * 90 + '%';
+                    item.style.position = 'absolute'; 
+                    item.style.top = '0px';
+                    const randomLeft = Math.random() * (box.clientWidth - 30);
+                    item.style.left = randomLeft + 'px';
                     box.appendChild(item);
 
                     let top = 0;
                     const fall = setInterval(() => {
-                        top += 5; item.style.top = top + 'px';
-                        if(top > 180) {
+                        top += 4; 
+                        item.style.top = top + 'px';
+                        
+                        const basketLeft = parseFloat(basket.style.left || 0);
+                        if(top >= 170 && top <= 190 && Math.abs(randomLeft - basketLeft) < 35) {
                             score++;
                             const scoreEl = document.getElementById('catchScore');
                             if(scoreEl) scoreEl.innerText = score;
-                            clearInterval(fall); item.remove();
+                            clearInterval(fall); 
+                            item.remove();
+                        } else if(top > 210) {
+                            clearInterval(fall); 
+                            item.remove();
                         }
-                    }, 50);
+                    }, 40);
                 }, 1000);
             }
             else if(gameType === 'snake') {
+                sX = 90; sY = 90; foodX = 30; foodY = 30;
                 container.innerHTML = `
                     <h3>Aşk Yılanı 🐍</h3>
-                    <p>Kalpleri Topla!</p>
-                    <div style="width:200px; height:200px; background:#fff0f3; margin:10px auto; position:relative; border-radius:10px;" id="snakeArea">
-                        <div id="snakeHead" style="position:absolute; top:90px; left:90px; font-size:1.2rem;">🐍</div>
-                        <div id="snakeFood" style="position:absolute; top:30px; left:30px; font-size:1.2rem;">❤️</div>
+                    <p>Skor: <span id="snakeScore">0</span></p>
+                    <div style="width:200px; height:200px; background:#fff0f3; margin:10px auto; position:relative; border-radius:10px; overflow:hidden;" id="snakeArea">
+                        <div id="snakeHead" style="position:absolute; top:${sY}px; left:${sX}px; font-size:1.2rem;">🐍</div>
+                        <div id="snakeFood" style="position:absolute; top:${foodY}px; left:${foodX}px; font-size:1.2rem;">❤️</div>
                     </div>
                     <div>
                         <button class="btn-ep" onclick="moveSnake('up')">⬆️</button><br>
@@ -579,7 +604,7 @@
 
         function closeGame() { 
             document.getElementById('gameModal').style.display = 'none'; 
-            clearInterval(gameInterval);
+            if(gameInterval) clearInterval(gameInterval);
         }
 
         function moveBtn(btn) { 
@@ -601,16 +626,42 @@
             document.getElementById('rpsResult').innerText = res;
         }
 
-        let sX = 90, sY = 90;
+        let snakeScore = 0;
         function moveSnake(dir) {
-            if(dir==='up') sY -= 20; if(dir==='down') sY += 20;
-            if(dir==='left') sX -= 20; if(dir==='right') sX += 20;
+            if(dir==='up') sY = Math.max(0, sY - 20); 
+            if(dir==='down') sY = Math.min(180, sY + 20);
+            if(dir==='left') sX = Math.max(0, sX - 20); 
+            if(dir==='right') sX = Math.min(180, sX + 20);
+            
             const head = document.getElementById('snakeHead');
+            const food = document.getElementById('snakeFood');
             if(head) {
                 head.style.left = sX + 'px';
                 head.style.top = sY + 'px';
             }
+
+            if(Math.abs(sX - foodX) < 18 && Math.abs(sY - foodY) < 18) {
+                snakeScore++;
+                const scoreEl = document.getElementById('snakeScore');
+                if(scoreEl) scoreEl.innerText = snakeScore;
+                foodX = Math.floor(Math.random() * 9) * 20;
+                foodY = Math.floor(Math.random() * 9) * 20;
+                if(food) {
+                    food.style.left = foodX + 'px';
+                    food.style.top = foodY + 'px';
+                }
+            }
         }
+
+        // Klavye Yön Tuşları Desteği (Yılan Oyunu İçin)
+        window.addEventListener('keydown', (e) => {
+            if(document.getElementById('gameModal').style.display === 'flex') {
+                if(e.key === 'ArrowUp') moveSnake('up');
+                if(e.key === 'ArrowDown') moveSnake('down');
+                if(e.key === 'ArrowLeft') moveSnake('left');
+                if(e.key === 'ArrowRight') moveSnake('right');
+            }
+        });
     </script>
 </body>
 </html>
