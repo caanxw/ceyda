@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ceyda'm & Ben - Aşk Dünyamız</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Dancing+Script:wght@700&family=Cinzel:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #ff4b72;
@@ -108,7 +108,7 @@
         .jar-icon { font-size: 3.8rem; color: var(--primary); transition: transform 0.3s; }
         .jar-container:hover .jar-icon { transform: scale(1.1) rotate(6deg); }
 
-        /* KAYDIRMALI SENİ NEDEN ÇOK SEVİYORUM CAROUSEL */
+        /* KAYDIRMALI SENİ NEDEN ÇOK SEVİYORUM CAROUSEL (ÇOĞALTILMIŞ) */
         .love-carousel {
             display: flex; gap: 15px; overflow-x: auto; scroll-snap-type: x mandatory;
             padding: 10px 5px; -webkit-overflow-scrolling: touch; scrollbar-width: none;
@@ -140,6 +140,31 @@
             color: white; transform: rotateY(180deg); font-size: 0.85rem; line-height: 1.4;
         }
 
+        /* KONYA DATE PLANLAYICI */
+        .date-plan-box {
+            background: white; border-radius: 16px; padding: 15px;
+            margin-top: 10px; border: 1.5px dashed var(--secondary);
+        }
+        .timeline-item {
+            display: flex; gap: 10px; align-items: flex-start; margin-bottom: 12px;
+            border-bottom: 1px dotted #eee; padding-bottom: 8px; text-align: left;
+        }
+        .timeline-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .time-tag {
+            background: var(--accent); color: var(--primary); padding: 4px 8px;
+            border-radius: 8px; font-weight: 700; font-size: 0.75rem; white-space: nowrap;
+        }
+
+        /* BUGÜN NE İZLEYELİM? */
+        .genre-select {
+            width: 100%; padding: 10px; border-radius: 12px; border: 1.5px solid var(--secondary);
+            font-size: 0.9rem; outline: none; margin-bottom: 10px; background: white;
+        }
+        .movie-card-result {
+            background: white; border-radius: 16px; padding: 15px; border: 1px solid #ffe0b2;
+            text-align: center; margin-top: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+        }
+
         /* OYUNLAR KOMPAKT GRID */
         .games-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
         .game-card {
@@ -153,7 +178,6 @@
         .game-card i { font-size: 1.5rem; color: var(--primary); display: block; margin-bottom: 4px; }
         .game-card h4 { font-size: 0.72rem; font-weight: 600; color: #444; }
 
-        /* ALT OYUN SAHNESİ */
         .inline-game-stage {
             display: none; background: white; border-radius: 16px; padding: 20px;
             margin-top: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.08);
@@ -161,9 +185,7 @@
             animation: fadeIn 0.3s ease-out;
         }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-        .close-stage-btn {
-            position: absolute; top: 10px; right: 15px; font-size: 1.4rem; cursor: pointer; color: #888;
-        }
+        .close-stage-btn { position: absolute; top: 10px; right: 15px; font-size: 1.4rem; cursor: pointer; color: #888; }
 
         /* YOUTUBE DİZİ BÖLÜM SEÇİCİ */
         .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 14px; margin-top: 10px; }
@@ -237,7 +259,37 @@
                 <p id="dailyNoteText" style="font-weight: 600; color: var(--dark); min-height: 20px; margin-top: 5px; font-size:0.9rem;"></p>
             </div>
 
-            <!-- SENİ NEDEN ÇOK SEVİYORUM (KAYDIRMALI CAROUSEL) -->
+            <!-- KONYA RASTGELE DATE PLANLAYICI (YAPAY ZEKA MODELİ MANTIĞI) -->
+            <div class="glass-card">
+                <div class="card-title"><i class="fa-solid fa-location-dot" style="color:var(--primary);"></i> Konya Günlük Date Planlayıcımız</div>
+                <p style="font-size:0.78rem; color:#666; text-align:center; margin-bottom:10px;">
+                    Bugün Konya'da ne yapsak diye düşünme! Yapay zeka ikimiz için saati saatine özel bir plan hazırlasın.
+                </p>
+                <button class="btn-love" onclick="generateKonyaDate()"><i class="fa-solid fa-wand-magic-sparkles"></i> Yeni Bir Date Planı Oluştur</button>
+                
+                <div id="datePlanResult" class="date-plan-box" style="display:none;">
+                    <!-- Dinamik içerik buraya gelecek -->
+                </div>
+            </div>
+
+            <!-- BUGÜN NE İZLEYELİM? (YÜKSEK IMDb ÖNERİ ALANI) -->
+            <div class="glass-card">
+                <div class="card-title"><i class="fa-solid fa-film" style="color:var(--primary);"></i> Bugün Ne İzleyelim?</div>
+                <select id="genreSelect" class="genre-select">
+                    <option value="romantik">❤️️ Romantik / Aşk</option>
+                    <option value="animasyon">🎨 Animasyon / Eğlence</option>
+                    <option value="dram">🎭 Dram / Duygusal</option>
+                    <option value="komedi">😂 Komedi / Eğlenceli</option>
+                    <option value="bilimkurgu">🚀 Bilim Kurgu / Gizem</option>
+                </select>
+                <button class="btn-love" onclick="recommendMovie()"><i class="fa-solid fa-dice"></i> IMDb Puanı Yüksek Film Öner</button>
+                
+                <div id="movieResult" class="movie-card-result" style="display:none;">
+                    <!-- Film öneri sonucu -->
+                </div>
+            </div>
+
+            <!-- SENİ NEDEN ÇOK SEVİYORUM (ÇOĞALTILMIŞ CAROUSEL) -->
             <div class="glass-card">
                 <div class="card-title"><i class="fa-solid fa-heart" style="color:var(--primary);"></i> Seni Neden Çok Seviyorum?</div>
                 <p style="font-size:0.75rem; color:#888; text-align:center; margin-bottom:8px;">(Dokun veya Sağa Kaydır ➔)</p>
@@ -259,6 +311,30 @@
                         <div class="flip-inner">
                             <div class="flip-front"><i class="fa-solid fa-eye"></i>Bakışların 👀</div>
                             <div class="flip-back">Gözlerimin içine her bakışında bana hissettirdiğin o derin huzur için.</div>
+                        </div>
+                    </div>
+                    <div class="love-card-slide">
+                        <div class="flip-inner">
+                            <div class="flip-front"><i class="fa-solid fa-face-smile"></i>Neşen 😊</div>
+                            <div class="flip-back">En yorgun anımda bile enerjinle modumu anında yükselttiğin için.</div>
+                        </div>
+                    </div>
+                    <div class="love-card-slide">
+                        <div class="flip-inner">
+                            <div class="flip-front"><i class="fa-solid fa-hands-holding-child"></i>Desteğin 🤝</div>
+                            <div class="flip-back">Her kararımda ve zorluğumda arkamdaki en büyük dağ olduğun için.</div>
+                        </div>
+                    </div>
+                    <div class="love-card-slide">
+                        <div class="flip-inner">
+                            <div class="flip-front"><i class="fa-solid fa-comments"></i>Sohbetin 💬</div>
+                            <div class="flip-back">Seninle saatlerce hiç sıkılmadan konuşabildiğim ve gülebildiğim için.</div>
+                        </div>
+                    </div>
+                    <div class="love-card-slide">
+                        <div class="flip-inner">
+                            <div class="flip-front"><i class="fa-solid fa-sun"></i>Huzurun ☀️</div>
+                            <div class="flip-back">Yanındayken tüm dünyanın gürültüsünün tamamen durması için.</div>
                         </div>
                     </div>
                     <div class="love-card-slide">
@@ -285,7 +361,6 @@
                     <div class="game-card" onclick="openGame('escapeBtn', this)"><i class="fa-solid fa-face-kiss-wink-heart"></i><h4>Sevgim</h4></div>
                 </div>
 
-                <!-- DOKUNULUNCA ALTTAN AÇILAN OYUN SAHNESİ -->
                 <div class="inline-game-stage" id="inlineGameStage">
                     <span class="close-stage-btn" onclick="closeGame()">&times;</span>
                     <div id="gameContainer"></div>
@@ -300,7 +375,6 @@
                     <iframe id="seriesIframe" src="https://www.youtube-nocookie.com/embed/5pLiSY5l8uE?rel=0&modestbranding=1" allowfullscreen></iframe>
                 </div>
 
-                <!-- BÖLÜM SEÇİCİ KANALI -->
                 <div class="episodes-scroll">
                     <button class="btn-ep active" onclick="changeEpisode('5pLiSY5l8uE', this)">1. Bölüm</button>
                     <button class="btn-ep" onclick="changeEpisode('k1X8xW9E_gI', this)">2. Bölüm</button>
@@ -398,6 +472,95 @@
         ];
         function openDailyNote() {
             document.getElementById('dailyNoteText').innerText = dailyNotes[Math.floor(Math.random() * dailyNotes.length)];
+        }
+
+        /* KONYA DATE VERİ ALANI MANTIĞI */
+        const konyaDates = {
+            mornings: [
+                "Meram Bağları'nda doğayla iç içe serpme kahvaltı yapıyoruz ☕",
+                "Sille Köyü'nün tarihi sokaklarında otantik bir kahvaltı ve Türk kahvesi molası 🥐",
+                "Zafer Meydanı tarafında sıcak simit-çay eşliğinde güne güzel bir başlangıç ☕",
+                "Japon Parkı'nın huzurlu atmosferinde kahvaltı ve gölet kenarı yürüyüşü 🌸"
+            ],
+            afternoons: [
+                "Mevlana Müzesi ve çevresindeki tarihi sokaklarda el ele romantik bir gezinti 🕌",
+                "Kelebekler Vadisi'nde rengarenk kelebeklerin arasında masalsı fotoğraflar çekinme 🦋",
+                "Alaaddin Tepesi'nde çimlerde oturup sohbet etme ve dondurma keyfi 🍦",
+                "80 Binde Devr-i Alem Parkı'nda mini maketler arasında eğlenceli turlama 🎡"
+            ],
+            lateAfternoons: [
+                "Kent Plaza veya M1 AVM'de tatlı molası ve eğlenceli mağaza turları 🍰",
+                "Sille Baraj Parkı'nda deniz havasında yürüyüş ve tekne turu 🛶",
+                "Bosna Hersek mahallesindeki şirin cafelerde waffle ve kahve keyfi 🧇",
+                "Kültür Park kenarında kuğuları izleyerek sohbet etme 🦢"
+            ],
+            evenings: [
+                "Akyokuş Seyir Tepesi'nde Konya'nın ışıl ışıl gece manzarasında romantik akşam yemeği 🌃",
+                "Meram Akyokuş Kasrı'nda gün batımına karşı çay keyfi 🌅",
+                "Tarihi etli ekmekçide Konya'nın meşhur lezzetini tatma ve akşam yürüyüşü 🍕",
+                "Mevlana Meydanı'nın gece ışıklandırmasında huzurlu bir yürüyüş ve kapanış 🌙"
+            ]
+        };
+
+        function generateKonyaDate() {
+            const m = konyaDates.mornings[Math.floor(Math.random() * konyaDates.mornings.length)];
+            const a = konyaDates.afternoons[Math.floor(Math.random() * konyaDates.afternoons.length)];
+            const la = konyaDates.lateAfternoons[Math.floor(Math.random() * konyaDates.lateAfternoons.length)];
+            const e = konyaDates.evenings[Math.floor(Math.random() * konyaDates.evenings.length)];
+
+            const box = document.getElementById('datePlanResult');
+            box.style.display = 'block';
+            box.innerHTML = `
+                <div class="timeline-item"><span class="time-tag">10:00 - 12:00</span><div>${m}</div></div>
+                <div class="timeline-item"><span class="time-tag">12:30 - 15:00</span><div>${a}</div></div>
+                <div class="timeline-item"><span class="time-tag">15:30 - 18:00</span><div>${la}</div></div>
+                <div class="timeline-item"><span class="time-tag">18:30 - 21:00</span><div>${e}</div></div>
+            `;
+        }
+
+        /* YÜKSEK IMDb FİLM ÖNERİ ALANI */
+        const moviesData = {
+            romantik: [
+                { title: "About Time (Zamanda Aşk)", imdb: "8.1", desc: "Zaman yolculuğuyla aşkın ve anın değerini anlatan harika bir başyapıt." },
+                { title: "La La Land", imdb: "8.0", desc: "Rengarenk sahneleri ve büyüleyici müzikleriyle romantik bir görsel şölen." },
+                { title: "Pride & Prejudice (Aşk ve Gurur)", imdb: "7.8", desc: "Samimi, zarif ve unutulmaz bir aşk hikayesi." },
+                { title: "The Notebook", imdb: "7.8", desc: "Yıllara meydan okuyan tutkulu bir aşk klasiği." }
+            ],
+            animasyon: [
+                { title: "WALL-E", imdb: "8.4", desc: "İki sevimli robotun evrendeki en tatlı aşk ve macera hikayesi." },
+                { title: "Coco", imdb: "8.4", desc: "Rengarenk dünyası ve harika müzikleriyle iç ısıtan aile ve sevgi hikayesi." },
+                { title: "Your Name (Kimi no Na wa)", imdb: "8.4", desc: "Büyüleyici çizimleriyle zamanı ve mekanı aşan duygusal bir anime." },
+                { title: "Up (Yukarı Bak)", imdb: "8.3", desc: "İlk 10 dakikasıyla bile gözleri dolduran unutulmaz bir macera." }
+            ],
+            dram: [
+                { title: "Interstellar (Yıldızlararası)", imdb: "8.7", desc: "Sevginin zaman ve boyut tanımayan gücünü işleyen bir bilim kurgu-dram." },
+                { title: "The Intouchables (Can Dostum)", imdb: "8.5", desc: "Yüzünüzü güldürürken içinizi sıcacık yapacak dostluk öyküsü." },
+                { title: "The Truman Show", imdb: "8.2", desc: "Sürükleyici, etkileyici ve üzerinde uzun uzun konuşulacak bir yapım." }
+            ],
+            komedi: [
+                { title: "The Grand Budapest Hotel", imdb: "8.1", desc: "Rengarenk, estetik ve son derece eğlenceli bir komedi macerası." },
+                { title: "Crazy, Stupid, Love", imdb: "7.4", desc: "Eğlenceli, romantik ve kahkahalar attıran harika bir kadro." },
+                { title: "PK", imdb: "8.1", desc: "Masum bir uzaylının dünyadaki komik ve anlamlı macerası." }
+            ],
+            bilimkurgu: [
+                { title: "Inception (Başlangıç)", imdb: "8.8", desc: "Rüyalar içinde rüyalar, soluksuz izlenecek bir zihin oyunu." },
+                { title: "Arrival", imdb: "7.9", desc: "İletişim, zaman ve duygu yüklü büyüleyici bir bilim kurgu." },
+                { title: "The Prestige", imdb: "8.5", desc: "Sihirbazların gizemli rekabetini anlatan şaşırtıcı bir film." }
+            ]
+        };
+
+        function recommendMovie() {
+            const genre = document.getElementById('genreSelect').value;
+            const list = moviesData[genre];
+            const selected = list[Math.floor(Math.random() * list.length)];
+            
+            const resultBox = document.getElementById('movieResult');
+            resultBox.style.display = 'block';
+            resultBox.innerHTML = `
+                <h4 style="color:var(--primary); font-size:1.1rem; margin-bottom:4px;">${selected.title}</h4>
+                <p style="font-size:0.8rem; font-weight:700; color:#e67e22; margin-bottom:6px;">⭐ IMDb: ${selected.imdb}</p>
+                <p style="font-size:0.85rem; color:#555;">${selected.desc}</p>
+            `;
         }
 
         /* YOUTUBE DİZİ BÖLÜM DEĞİŞTİRME */
@@ -525,7 +688,7 @@
                 `;
             }
             else if(gameType === 'memory') {
-                const icons = ['❤️', '❤️', '✨', '✨', '🌹', '🌹', '💖', '💖'];
+                const icons = ['❤️️', '❤️', '✨', '✨', '🌹', '🌹', '💖', '💖'];
                 icons.sort(() => 0.5 - Math.random());
                 container.innerHTML = `
                     <h3 style="font-size:1rem;">Aşk Hafızası 🧠</h3>
@@ -609,7 +772,7 @@
                 gameInterval = setInterval(() => {
                     if(!box) return;
                     const item = document.createElement('div');
-                    item.innerText = '❤️️';
+                    item.innerText = '❤';
                     item.style.position = 'absolute'; 
                     item.style.top = '0px';
                     const randomLeft = Math.random() * (box.clientWidth - 25);
