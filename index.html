@@ -31,7 +31,6 @@
             overflow-x: hidden;
         }
 
-        /* YÜZEN KALPLER */
         .heart-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none; z-index: 0; overflow: hidden;
@@ -45,7 +44,6 @@
             100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
         }
 
-        /* GİRİŞ EKRANI */
         #login-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
@@ -76,12 +74,10 @@
         }
         .btn-love:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255, 75, 114, 0.5); }
 
-        /* ANA SAYFA */
         #main-content { display: none; opacity: 0; transition: opacity 0.8s ease; position: relative; z-index: 1; }
         header { text-align: center; padding: 30px 20px 15px; }
         header h1 { font-family: 'Dancing Script', cursive; font-size: 3.2rem; color: var(--primary); }
 
-        /* SAYAÇ */
         .timer-container { display: flex; justify-content: center; gap: 10px; margin-top: 12px; }
         .timer-box {
             background: white; padding: 8px 14px; border-radius: 14px;
@@ -103,12 +99,10 @@
             display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600;
         }
 
-        /* 365 GÜN KAVANOZU */
         .jar-container { text-align: center; cursor: pointer; padding: 5px; }
         .jar-icon { font-size: 3.8rem; color: var(--primary); transition: transform 0.3s; }
         .jar-container:hover .jar-icon { transform: scale(1.1) rotate(6deg); }
 
-        /* KAYDIRMALI SENİ NEDEN ÇOK SEVİYORUM CAROUSEL (ÇOĞALTILMIŞ) */
         .love-carousel {
             display: flex; gap: 15px; overflow-x: auto; scroll-snap-type: x mandatory;
             padding: 10px 5px; -webkit-overflow-scrolling: touch; scrollbar-width: none;
@@ -140,7 +134,6 @@
             color: white; transform: rotateY(180deg); font-size: 0.85rem; line-height: 1.4;
         }
 
-        /* KONYA DATE PLANLAYICI */
         .date-plan-box {
             background: white; border-radius: 16px; padding: 15px;
             margin-top: 10px; border: 1.5px dashed var(--secondary);
@@ -155,7 +148,6 @@
             border-radius: 8px; font-weight: 700; font-size: 0.75rem; white-space: nowrap;
         }
 
-        /* BUGÜN NE İZLEYELİM? */
         .genre-select {
             width: 100%; padding: 10px; border-radius: 12px; border: 1.5px solid var(--secondary);
             font-size: 0.9rem; outline: none; margin-bottom: 10px; background: white;
@@ -165,7 +157,6 @@
             text-align: center; margin-top: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.03);
         }
 
-        /* OYUNLAR KOMPAKT GRID */
         .games-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
         .game-card {
             background: white; border-radius: 14px; padding: 12px 5px; text-align: center;
@@ -187,7 +178,6 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         .close-stage-btn { position: absolute; top: 10px; right: 15px; font-size: 1.4rem; cursor: pointer; color: #888; }
 
-        /* YOUTUBE DİZİ BÖLÜM SEÇİCİ */
         .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 14px; margin-top: 10px; }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
         .episodes-scroll {
@@ -201,7 +191,6 @@
         }
         .btn-ep.active { background: var(--primary); color: white; }
 
-        /* GALERİ */
         .gallery-slider { display: flex; gap: 12px; overflow-x: auto; padding: 5px 0; scrollbar-width: none; }
         .gallery-slider::-webkit-scrollbar { display: none; }
         .polaroid {
@@ -210,7 +199,6 @@
         }
         .polaroid img { width: 100%; height: 120px; object-fit: cover; border-radius: 4px; }
 
-        /* OYUN İÇİ MANTIĞI */
         .memory-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 10px; }
         .memory-card {
             aspect-ratio: 1; background: var(--accent); border-radius: 8px; font-size: 1.6rem;
@@ -224,7 +212,6 @@
 
     <div class="heart-bg" id="heartBg"></div>
 
-    <!-- ŞİFRE EKRANI -->
     <div id="login-screen">
         <div class="login-card">
             <i class="fa-solid fa-heart-circle-bolt" style="font-size: 3.5rem; color: var(--primary); margin-bottom: 10px;"></i>
@@ -236,7 +223,6 @@
         </div>
     </div>
 
-    <!-- ANA İÇERİK -->
     <div id="main-content">
         <header>
             <h1>Hoş Geldin Ceyda'm ❤️</h1>
@@ -250,7 +236,6 @@
 
         <div class="container">
 
-            <!-- 365 GÜN KAVANOZU -->
             <div class="glass-card text-center" style="text-align: center;">
                 <div class="card-title"><i class="fa-solid fa-jar" style="color:var(--primary);"></i> Günlük Sevgi Notumuz</div>
                 <div class="jar-container" onclick="openDailyNote()">
@@ -259,28 +244,29 @@
                 <p id="dailyNoteText" style="font-weight: 600; color: var(--dark); min-height: 20px; margin-top: 5px; font-size:0.9rem;"></p>
             </div>
 
-            <!-- KONYA RASTGELE DATE PLANLAYICI (YAPAY ZEKA MODELİ MANTIĞI) -->
+            <!-- KONYA RASTGELE ETKİNLİK VE DATE PLANLAYICI -->
             <div class="glass-card">
-                <div class="card-title"><i class="fa-solid fa-location-dot" style="color:var(--primary);"></i> Konya Günlük Date Planlayıcımız</div>
+                <div class="card-title"><i class="fa-solid fa-compass" style="color:var(--primary);"></i> Konya Sürpriz Date & Aktivite Planlayıcı</div>
                 <p style="font-size:0.78rem; color:#666; text-align:center; margin-bottom:10px;">
-                    Bugün Konya'da ne yapsak diye düşünme! Yapay zeka ikimiz için saati saatine özel bir plan hazırlasın.
+                    Sadece kafe değil; at binme, atölye, açık hava, spor ve eğlence dolu her tıklamada tamamen farklı bir gün planı!
                 </p>
-                <button class="btn-love" onclick="generateKonyaDate()"><i class="fa-solid fa-wand-magic-sparkles"></i> Yeni Bir Date Planı Oluştur</button>
+                <button class="btn-love" onclick="generateKonyaDate()"><i class="fa-solid fa-wand-magic-sparkles"></i> Rastgele Yeni Bir Plan Oluştur</button>
                 
                 <div id="datePlanResult" class="date-plan-box" style="display:none;">
-                    <!-- Dinamik içerik buraya gelecek -->
+                    <!-- Dinamik aktivite akışı -->
                 </div>
             </div>
 
-            <!-- BUGÜN NE İZLEYELİM? (YÜKSEK IMDb ÖNERİ ALANI) -->
+            <!-- BUGÜN NE İZLEYELİM? (GENİŞ VERİTABANLI) -->
             <div class="glass-card">
                 <div class="card-title"><i class="fa-solid fa-film" style="color:var(--primary);"></i> Bugün Ne İzleyelim?</div>
                 <select id="genreSelect" class="genre-select">
-                    <option value="romantik">❤️️ Romantik / Aşk</option>
+                    <option value="romantik">❤ Romantik / Aşk</option>
                     <option value="animasyon">🎨 Animasyon / Eğlence</option>
                     <option value="dram">🎭 Dram / Duygusal</option>
                     <option value="komedi">😂 Komedi / Eğlenceli</option>
                     <option value="bilimkurgu">🚀 Bilim Kurgu / Gizem</option>
+                    <option value="macera">🗺️ Aksiyon / Macera</option>
                 </select>
                 <button class="btn-love" onclick="recommendMovie()"><i class="fa-solid fa-dice"></i> IMDb Puanı Yüksek Film Öner</button>
                 
@@ -289,7 +275,7 @@
                 </div>
             </div>
 
-            <!-- SENİ NEDEN ÇOK SEVİYORUM (ÇOĞALTILMIŞ CAROUSEL) -->
+            <!-- SENİ NEDEN ÇOK SEVİYORUM CAROUSEL -->
             <div class="glass-card">
                 <div class="card-title"><i class="fa-solid fa-heart" style="color:var(--primary);"></i> Seni Neden Çok Seviyorum?</div>
                 <p style="font-size:0.75rem; color:#888; text-align:center; margin-bottom:8px;">(Dokun veya Sağa Kaydır ➔)</p>
@@ -346,7 +332,6 @@
                 </div>
             </div>
 
-            <!-- KOMPAKT MİNİ OYUNLAR ALANI -->
             <div class="glass-card">
                 <div class="card-title"><i class="fa-solid fa-gamepad" style="color:var(--primary);"></i> Mini Oyunlarımız</div>
                 
@@ -367,7 +352,6 @@
                 </div>
             </div>
 
-            <!-- İNADINA AŞK DİZİ İZLEME VE BÖLÜM SEÇİCİ -->
             <div class="glass-card">
                 <div class="card-title"><i class="fa-solid fa-tv" style="color:var(--primary);"></i> İnadına Aşk İzleme Alanımız</div>
                 
@@ -389,16 +373,14 @@
                 </div>
             </div>
 
-            <!-- ÇİZİM TUVALİ -->
             <div class="glass-card text-center" style="text-align: center;">
-                <div class="card-title"><i class="fa-solid fa-palette" style="color:var(--primary);"></i> Ceyda'nın Çizim Tuvalı</div>
+                <div class="card-title"><i class="fa-solid fa-palette" style="color:var(--primary);"></i> Ceyda'nin Çizim Tuvalı</div>
                 <canvas id="loveCanvas" width="280" height="150" style="border:2px dashed var(--secondary); background:white; border-radius:12px; cursor:crosshair;"></canvas>
                 <div style="margin-top: 8px;">
                     <button class="btn-love" style="padding: 4px 15px; font-size: 0.75rem; width:auto;" onclick="clearCanvas()">Temizle</button>
                 </div>
             </div>
 
-            <!-- POLAROID GALERİ -->
             <div class="glass-card">
                 <div class="card-title"><i class="fa-solid fa-camera-retro" style="color:var(--primary);"></i> Anı Galerimiz</div>
                 <div class="gallery-slider" id="gallerySlider">
@@ -474,78 +456,94 @@
             document.getElementById('dailyNoteText').innerText = dailyNotes[Math.floor(Math.random() * dailyNotes.length)];
         }
 
-        /* KONYA DATE VERİ ALANI MANTIĞI */
-        const konyaDates = {
-            mornings: [
-                "Meram Bağları'nda doğayla iç içe serpme kahvaltı yapıyoruz ☕",
-                "Sille Köyü'nün tarihi sokaklarında otantik bir kahvaltı ve Türk kahvesi molası 🥐",
-                "Zafer Meydanı tarafında sıcak simit-çay eşliğinde güne güzel bir başlangıç ☕",
-                "Japon Parkı'nın huzurlu atmosferinde kahvaltı ve gölet kenarı yürüyüşü 🌸"
+        /* ÇEŞİTLENDİRİLMİŞ DİNAMİK KONYA AKTİVİTE & DATE PLANLAYICI */
+        const konyaActivities = {
+            morning: [
+                "<b>🐎 Meram At Çiftlikleri:</b> Sabah doğayla iç içe at binme deneyimi ve kahvaltı keyfi ☕",
+                "<b>🚲 Karaaslan Hobi Bahçeleri:</b> Bisiklet kiralayıp yeşillikler arasında sabah turu yapıyoruz 🚲",
+                "<b>🏺 Sille Sanat Atölyeleri:</b> Sille'nin otantik sokaklarında çömlek yapım atölyesine katılıp kendi bardağımızı tasarlıyoruz 🎨",
+                "<b>🌸 Japon Parkı:</b> Gölet kenarında kuğuları izleyip sabah yürüyüşü ve fotoğraf çekimi 📸",
+                "<b>🥐 Zafer Tarihi Fırınlar:</b> Sıcak Konya simidi ve çay eşliğinde güne enerjik başlangıç ☕",
+                "<b>🛶 Sille Baraj Parkı:</b> Baraj gölü etrafında yürüyüş ve doğa havası alma 🌲"
             ],
-            afternoons: [
-                "Mevlana Müzesi ve çevresindeki tarihi sokaklarda el ele romantik bir gezinti 🕌",
-                "Kelebekler Vadisi'nde rengarenk kelebeklerin arasında masalsı fotoğraflar çekinme 🦋",
-                "Alaaddin Tepesi'nde çimlerde oturup sohbet etme ve dondurma keyfi 🍦",
-                "80 Binde Devr-i Alem Parkı'nda mini maketler arasında eğlenceli turlama 🎡"
+            afternoon: [
+                "<b>🔬 Konya Bilim Merkezi:</b> İnteraktif sergileri gezme ve Planeteryum'da yıldız/uzay gösterisi izleme 🌌",
+                "<b>🦋 Kelebekler Vadisi:</b> Tropik ortamda yüzlerce canlı kelebeğin arasında masalsı fotoğraf çekimi 🦋",
+                "<b>🎯 AVM/Eğlence Alanı:</b> M1 veya Kent Plaza'da eğlenceli Bowling Turnuvası ve VR oyun deneyimi 🎳",
+                "<b>🚲 Meram Dere/Lale Bahçesi:</b> Doğa yürüyüşü yapıp piknik örtümüzü sererek sohbet etme 🧺",
+                "<b>🍦 Alaaddin Tepesi:</b> Çimlerde oturup açık havada dondurma ve tatlı keyfi 🍨",
+                "<b>🏛️ 80 Binde Devr-i Alem:</b> Masal şatoları ve minyatür maketler arasında eğlenceli tur 🏰"
             ],
-            lateAfternoons: [
-                "Kent Plaza veya M1 AVM'de tatlı molası ve eğlenceli mağaza turları 🍰",
-                "Sille Baraj Parkı'nda deniz havasında yürüyüş ve tekne turu 🛶",
-                "Bosna Hersek mahallesindeki şirin cafelerde waffle ve kahve keyfi 🧇",
-                "Kültür Park kenarında kuğuları izleyerek sohbet etme 🦢"
+            lateAfternoon: [
+                "<b>⛸️ Buz Pateni Deneyimi:</b> Ele ele buz pistinde eğlenceli vakit geçirme ❄️",
+                "<b>☕ Şirin Konak Cafeleri:</b> Tarihi Meram veya Sille konaklarında sıcak çikolata / Türk kahvesi molası ☕",
+                "<b>📚 Bilim/Kültür Kitap Cafeleri:</b> Birlikte yeni kitaplar seçip sakin bir ortamda okuma ve sohbet etme 📖",
+                "<b>📸 Akyokuş Yürüyüş Yolu:</b> Doğa parkurunda yürüyüş yapıp gün batımını bekleme 🌅"
             ],
-            evenings: [
-                "Akyokuş Seyir Tepesi'nde Konya'nın ışıl ışıl gece manzarasında romantik akşam yemeği 🌃",
-                "Meram Akyokuş Kasrı'nda gün batımına karşı çay keyfi 🌅",
-                "Tarihi etli ekmekçide Konya'nın meşhur lezzetini tatma ve akşam yürüyüşü 🍕",
-                "Mevlana Meydanı'nın gece ışıklandırmasında huzurlu bir yürüyüş ve kapanış 🌙"
+            evening: [
+                "<b>🌃 Akyokuş Seyir Tepesi:</b> Tüm Konya'nın gece ışıklarına karşı gün batımı ve romantik akşam yemeği 🌙",
+                "<b>🍕 Tarihi Etli Ekmek Restoranları:</b> Konya'nın yöresel lezzetini tadıp üzerine fırın sütlaç keyfi 🍕",
+                "<b>🕌 Mevlana Meydanı:</b> Gece ışıklandırmaları altında huzurlu ve sakin bir akşam yürüyüşü ✨",
+                "<b>🎬 Şehir Sineması:</b> Patlamış mısır eşliğinde akşam seansına gitme 🍿"
             ]
         };
 
         function generateKonyaDate() {
-            const m = konyaDates.mornings[Math.floor(Math.random() * konyaDates.mornings.length)];
-            const a = konyaDates.afternoons[Math.floor(Math.random() * konyaDates.afternoons.length)];
-            const la = konyaDates.lateAfternoons[Math.floor(Math.random() * konyaDates.lateAfternoons.length)];
-            const e = konyaDates.evenings[Math.floor(Math.random() * konyaDates.evenings.length)];
+            const m = konyaActivities.morning[Math.floor(Math.random() * konyaActivities.morning.length)];
+            const a = konyaActivities.afternoon[Math.floor(Math.random() * konyaActivities.afternoon.length)];
+            const la = konyaActivities.lateAfternoon[Math.floor(Math.random() * konyaActivities.lateAfternoon.length)];
+            const e = konyaActivities.evening[Math.floor(Math.random() * konyaActivities.evening.length)];
 
             const box = document.getElementById('datePlanResult');
             box.style.display = 'block';
             box.innerHTML = `
-                <div class="timeline-item"><span class="time-tag">10:00 - 12:00</span><div>${m}</div></div>
-                <div class="timeline-item"><span class="time-tag">12:30 - 15:00</span><div>${a}</div></div>
-                <div class="timeline-item"><span class="time-tag">15:30 - 18:00</span><div>${la}</div></div>
-                <div class="timeline-item"><span class="time-tag">18:30 - 21:00</span><div>${e}</div></div>
+                <div class="timeline-item"><span class="time-tag">10:00 - 12:30</span><div>${m}</div></div>
+                <div class="timeline-item"><span class="time-tag">13:00 - 15:30</span><div>${a}</div></div>
+                <div class="timeline-item"><span class="time-tag">16:00 - 18:00</span><div>${la}</div></div>
+                <div class="timeline-item"><span class="time-tag">18:30 - 21:30</span><div>${e}</div></div>
             `;
         }
 
-        /* YÜKSEK IMDb FİLM ÖNERİ ALANI */
+        /* YÜKSEK IMDb FİLM ÖNERİ ALANI (GENİŞ VERİTABANI) */
         const moviesData = {
             romantik: [
                 { title: "About Time (Zamanda Aşk)", imdb: "8.1", desc: "Zaman yolculuğuyla aşkın ve anın değerini anlatan harika bir başyapıt." },
                 { title: "La La Land", imdb: "8.0", desc: "Rengarenk sahneleri ve büyüleyici müzikleriyle romantik bir görsel şölen." },
                 { title: "Pride & Prejudice (Aşk ve Gurur)", imdb: "7.8", desc: "Samimi, zarif ve unutulmaz bir aşk hikayesi." },
-                { title: "The Notebook", imdb: "7.8", desc: "Yıllara meydan okuyan tutkulu bir aşk klasiği." }
+                { title: "The Notebook", imdb: "7.8", desc: "Yıllara meydan okuyan tutkulu bir aşk klasiği." },
+                { title: "Before Sunrise (Gün Doğmadan)", imdb: "8.1", desc: "Viyana sokaklarında geçen en samimi aşk ve sohbet filmi." },
+                { title: "500 Days of Summer", imdb: "7.7", desc: "Aşkın ve ilişkilerin gerçekçi, tatlı-sert anlatımı." }
             ],
             animasyon: [
                 { title: "WALL-E", imdb: "8.4", desc: "İki sevimli robotun evrendeki en tatlı aşk ve macera hikayesi." },
                 { title: "Coco", imdb: "8.4", desc: "Rengarenk dünyası ve harika müzikleriyle iç ısıtan aile ve sevgi hikayesi." },
                 { title: "Your Name (Kimi no Na wa)", imdb: "8.4", desc: "Büyüleyici çizimleriyle zamanı ve mekanı aşan duygusal bir anime." },
-                { title: "Up (Yukarı Bak)", imdb: "8.3", desc: "İlk 10 dakikasıyla bile gözleri dolduran unutulmaz bir macera." }
+                { title: "Up (Yukarı Bak)", imdb: "8.3", desc: "İlk 10 dakikasıyla bile gözleri dolduran unutulmaz bir macera." },
+                { title: "Spirited Away (Ruhların Kaçışı)", imdb: "8.6", desc: "Miyazaki'den büyüleyici, masalsı bir başyapıt." },
+                { title: "Inside Out (Ters Yüz)", imdb: "8.1", desc: "Duygularımızın dünyasında neşeli ve anlamlı bir yolculuk." }
             ],
             dram: [
                 { title: "Interstellar (Yıldızlararası)", imdb: "8.7", desc: "Sevginin zaman ve boyut tanımayan gücünü işleyen bir bilim kurgu-dram." },
                 { title: "The Intouchables (Can Dostum)", imdb: "8.5", desc: "Yüzünüzü güldürürken içinizi sıcacık yapacak dostluk öyküsü." },
-                { title: "The Truman Show", imdb: "8.2", desc: "Sürükleyici, etkileyici ve üzerinde uzun uzun konuşulacak bir yapım." }
+                { title: "The Truman Show", imdb: "8.2", desc: "Sürükleyici, etkivalici ve üzerine uzun uzun konuşulacak bir yapım." },
+                { title: "The Pursuit of Happyness", imdb: "8.0", desc: "Umut ve azim dolu, duygu yüklü bir gerçek yaşam öyküsü." }
             ],
             komedi: [
                 { title: "The Grand Budapest Hotel", imdb: "8.1", desc: "Rengarenk, estetik ve son derece eğlenceli bir komedi macerası." },
                 { title: "Crazy, Stupid, Love", imdb: "7.4", desc: "Eğlenceli, romantik ve kahkahalar attıran harika bir kadro." },
-                { title: "PK", imdb: "8.1", desc: "Masum bir uzaylının dünyadaki komik ve anlamlı macerası." }
+                { title: "PK", imdb: "8.1", desc: "Masum bir uzaylının dünyadaki komik ve anlamlı macerası." },
+                { title: "Green Book", imdb: "8.2", desc: "Eğlenceli diyalogları ve muhteşem dostluğuyla sıcak bir yol hikayesi." }
             ],
             bilimkurgu: [
                 { title: "Inception (Başlangıç)", imdb: "8.8", desc: "Rüyalar içinde rüyalar, soluksuz izlenecek bir zihin oyunu." },
                 { title: "Arrival", imdb: "7.9", desc: "İletişim, zaman ve duygu yüklü büyüleyici bir bilim kurgu." },
-                { title: "The Prestige", imdb: "8.5", desc: "Sihirbazların gizemli rekabetini anlatan şaşırtıcı bir film." }
+                { title: "The Prestige", imdb: "8.5", desc: "Sihirbazların gizemli rekabetini anlatan şaşırtıcı bir film." },
+                { title: "The Matrix", imdb: "8.7", desc: "Gerçeklik algınızı değiştirecek sinema tarihinin kült yapıtı." }
+            ],
+            macera: [
+                { title: "Yüzüklerin Efendisi: Yüzük Kardeşliği", imdb: "8.8", desc: "Masalsı bir evrende unutulmaz bir macera başlangıcı." },
+                { title: "Pirates of the Caribbean", imdb: "8.1", desc: "Kaptan Jack Sparrow ile eğlence ve macera dolu korsan turları." },
+                { title: "Avatar", imdb: "7.9", desc: "Pandora gezegeninin görsel şöleninde geçen muhteşem bir mücadele." }
             ]
         };
 
@@ -563,7 +561,6 @@
             `;
         }
 
-        /* YOUTUBE DİZİ BÖLÜM DEĞİŞTİRME */
         function changeEpisode(videoPath, btn) {
             document.querySelectorAll('.btn-ep').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
@@ -578,7 +575,6 @@
             }
         }
 
-        /* ÇİZİM TUVALİ */
         let canvas, ctx, drawing = false;
         function initCanvas() {
             canvas = document.getElementById('loveCanvas');
@@ -606,7 +602,6 @@
         }
         function clearCanvas() { if(ctx) ctx.clearRect(0, 0, canvas.width, canvas.height); }
 
-        /* GALERİ */
         function uploadPhoto(event) {
             const file = event.target.files[0];
             if (file) {
@@ -635,7 +630,6 @@
             });
         }
 
-        /* OYUNLARI ALT SAHNEDE AÇMA MANTIĞI */
         let gameInterval = null;
         let sX = 90, sY = 90, foodX = 30, foodY = 30;
 
@@ -688,7 +682,7 @@
                 `;
             }
             else if(gameType === 'memory') {
-                const icons = ['❤️️', '❤️', '✨', '✨', '🌹', '🌹', '💖', '💖'];
+                const icons = ['❤', '❤️', '✨', '✨', '🌹', '🌹', '💖', '💖'];
                 icons.sort(() => 0.5 - Math.random());
                 container.innerHTML = `
                     <h3 style="font-size:1rem;">Aşk Hafızası 🧠</h3>
@@ -882,6 +876,5 @@
             }
         });
     </script>
-    Güzelim 💕
 </body>
 </html>
