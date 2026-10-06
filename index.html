@@ -5,14 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ceyda'm & Ben - Aşk Dünyamız</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Dancing+Script:wght@700&family=Cinzel:wght@600&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #ff4b72;
             --secondary: #ff85a1;
             --accent: #ffe6ea;
             --dark: #2d132c;
-            --light: #fff5f7;
+            --gold: #ffd700;
+            --gold-gradient: linear-gradient(135deg, #fff6d1 0%, #ffe385 50%, #ffd700 100%);
             --glass: rgba(255, 255, 255, 0.9);
             --shadow: 0 10px 30px rgba(255, 75, 114, 0.15);
         }
@@ -107,29 +108,69 @@
         .jar-icon { font-size: 4.5rem; color: var(--primary); transition: transform 0.3s; }
         .jar-container:hover .jar-icon { transform: scale(1.1) rotate(6deg); }
 
-        /* 3D KARTLAR */
-        .cards-3d { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
-        .flip-card { height: 110px; perspective: 1000px; cursor: pointer; }
-        .flip-card-inner {
+        /* PREMIUM "SENİ NEDEN ÇOK SEVİYORUM" ALANI */
+        .premium-card-wrapper {
+            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,240,245,0.9) 100%);
+            border-radius: 24px; padding: 30px; position: relative; overflow: hidden;
+            border: 2px solid rgba(255, 215, 0, 0.6);
+            box-shadow: 0 15px 35px rgba(212, 175, 55, 0.25), inset 0 0 15px rgba(255, 215, 0, 0.1);
+            margin-bottom: 25px;
+        }
+        .premium-badge {
+            position: absolute; top: 15px; right: 20px;
+            background: var(--gold-gradient); color: #5a4100;
+            padding: 4px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 700;
+            letter-spacing: 1px; text-transform: uppercase; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: flex; align-items: center; gap: 5px;
+        }
+        .premium-title {
+            font-family: 'Cinzel', serif; font-size: 2rem; color: #4a1525;
+            text-align: center; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .cards-3d-premium { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 20px; }
+        .flip-card-premium { height: 140px; perspective: 1000px; cursor: pointer; }
+        .flip-card-inner-premium {
             position: relative; width: 100%; height: 100%; text-align: center;
-            transition: transform 0.6s; transform-style: preserve-3d;
+            transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d;
         }
-        .flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
-        .flip-front, .flip-back {
+        .flip-card-premium:hover .flip-card-inner-premium { transform: rotateY(180deg); }
+        .flip-front-premium, .flip-back-premium {
             position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
-            border-radius: 14px; display: flex; align-items: center; justify-content: center; padding: 10px;
+            border-radius: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
         }
-        .flip-front { background: white; color: var(--primary); border: 2px solid var(--accent); font-weight: 600; }
-        .flip-back { background: var(--primary); color: white; transform: rotateY(180deg); font-size: 0.85rem; }
+        .flip-front-premium {
+            background: white; border: 1.5px solid rgba(255,215,0,0.5); color: #5a1227; font-weight: 600; font-size: 1.1rem;
+        }
+        .flip-front-premium i { font-size: 1.8rem; color: #d4af37; margin-bottom: 8px; }
+        .flip-back-premium {
+            background: linear-gradient(135deg, #ff4b72 0%, #d4af37 100%);
+            color: white; transform: rotateY(180deg); font-size: 0.9rem; line-height: 1.4; text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
 
         /* OYUNLAR GRID */
         .games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 15px; }
         .game-card {
             background: white; border-radius: 16px; padding: 20px; text-align: center;
-            cursor: pointer; transition: 0.3s; box-shadow: var(--shadow);
+            cursor: pointer; transition: 0.3s; box-shadow: var(--shadow); border: 2px solid transparent;
         }
-        .game-card:hover { transform: translateY(-4px); }
+        .game-card:hover, .game-card.active-game {
+            transform: translateY(-4px); border-color: var(--primary); background: #fff0f3;
+        }
         .game-card i { font-size: 2.2rem; color: var(--primary); margin-bottom: 10px; }
+
+        /* SAYFA İÇİ OYUN SAHNESİ (ALT ALAN) */
+        .inline-game-stage {
+            display: none; background: white; border-radius: 20px; padding: 25px;
+            margin-top: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 2px solid var(--secondary); text-align: center; position: relative;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .close-stage-btn {
+            position: absolute; top: 15px; right: 20px; font-size: 1.5rem; cursor: pointer; color: #888;
+        }
+        .close-stage-btn:hover { color: var(--primary); }
 
         /* GALERİ */
         .gallery-slider { display: flex; gap: 15px; overflow-x: auto; padding: 10px 0; }
@@ -148,18 +189,6 @@
             padding: 6px 14px; border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 0.85rem; transition: 0.2s;
         }
         .btn-ep:hover, .btn-ep.active { background: var(--primary); color: white; }
-
-        /* MODAL */
-        .modal {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5); display: none; justify-content: center;
-            align-items: center; z-index: 10000; backdrop-filter: blur(4px);
-        }
-        .modal-content {
-            background: white; width: 90%; max-width: 520px; border-radius: 20px;
-            padding: 25px; position: relative; text-align: center; max-height: 90vh; overflow-y: auto;
-        }
-        .close-btn { position: absolute; top: 12px; right: 18px; font-size: 1.6rem; cursor: pointer; color: #888; }
 
         /* OYUN İÇİ STİLLER */
         .memory-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 15px; }
@@ -212,28 +241,57 @@
                 <p id="dailyNoteText" style="font-weight: 600; color: var(--dark); min-height: 25px; margin-top: 5px;"></p>
             </div>
 
-            <!-- 3D NEDEN CEYDA KARTLARI -->
-            <div class="glass-card">
-                <h2 class="section-title" style="margin-top: 0;"><i class="fa-solid fa-heart"></i> Seni Neden Çok Seviyorum?</h2>
-                <div class="cards-3d">
-                    <div class="flip-card"><div class="flip-card-inner"><div class="flip-front">Gülüşün ✨</div><div class="flip-back">Dünyadaki tüm dertleri unutturan sıcacık gülüşün için.</div></div></div>
-                    <div class="flip-card"><div class="flip-card-inner"><div class="flip-front">Kalbin ❤️</div><div class="flip-back">Herkese karşı o kocaman, merhametli sevgin için.</div></div></div>
-                    <div class="flip-card"><div class="flip-card-inner"><div class="flip-front">Bakışların 👀</div><div class="flip-back">Gözlerimin içine bakarken hissettiğim huzur için.</div></div></div>
-                    <div class="flip-card"><div class="flip-card-inner"><div class="flip-front">Varlığın 🌹</div><div class="flip-back">Hayatımda olduğun her güne şükrettirdiğin için.</div></div></div>
+            <!-- PREMIUM: SENİ NEDEN ÇOK SEVİYORUM KARTLARI -->
+            <div class="premium-card-wrapper">
+                <div class="premium-badge"><i class="fa-solid fa-crown"></i> Premium Collection</div>
+                <h2 class="premium-title"><i class="fa-solid fa-gem" style="color:#d4af37; margin-right:8px;"></i> Seni Neden Çok Seviyorum?</h2>
+                <div class="cards-3d-premium">
+                    <div class="flip-card-premium">
+                        <div class="flip-card-inner-premium">
+                            <div class="flip-front-premium"><i class="fa-solid fa-wand-magic-sparkles"></i>Gülüşün ✨</div>
+                            <div class="flip-back-premium">Dünyadaki tüm dertleri unutturan, karanlık günlerimi aydınlatan o eşsiz gülüşün için.</div>
+                        </div>
+                    </div>
+                    <div class="flip-card-premium">
+                        <div class="flip-card-inner-premium">
+                            <div class="flip-front-premium"><i class="fa-solid fa-heart-pulse"></i>Kalbin ❤️</div>
+                            <div class="flip-back-premium">Herkese karşı o kocaman, tertemiz ve merhamet dolu sevgi dolu yüreğin için.</div>
+                        </div>
+                    </div>
+                    <div class="flip-card-premium">
+                        <div class="flip-card-inner-premium">
+                            <div class="flip-front-premium"><i class="fa-solid fa-eye"></i>Bakışların 👀</div>
+                            <div class="flip-back-premium">Gözlerimin içine her bakışında bana hissettirdiğin o derin huzur ve güven için.</div>
+                        </div>
+                    </div>
+                    <div class="flip-card-premium">
+                        <div class="flip-card-inner-premium">
+                            <div class="flip-front-premium"><i class="fa-solid fa-rose"></i>Varlığın 🌹</div>
+                            <div class="flip-back-premium">Hayatımda olduğun, elini tutabildiğim her güne şükrettirdiğin ve yaşamıma anlam kattığın için.</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <!-- 8 MİNİ OYUN -->
-            <h2 class="section-title"><i class="fa-solid fa-gamepad"></i> Mini Oyunlarımız (8 Tane)</h2>
-            <div class="games-grid">
-                <div class="game-card" onclick="openGame('catcher')"><i class="fa-solid fa-hand-holding-heart"></i><h4>Kalp Yakalama</h4></div>
-                <div class="game-card" onclick="openGame('memory')"><i class="fa-solid fa-brain"></i><h4>Aşk Hafızası</h4></div>
-                <div class="game-card" onclick="openGame('quiz')"><i class="fa-solid fa-circle-question"></i><h4>Aşk Quizi</h4></div>
-                <div class="game-card" onclick="openGame('pop')"><i class="fa-solid fa-burst"></i><h4>Kalp Patlat</h4></div>
-                <div class="game-card" onclick="openGame('wheel')"><i class="fa-solid fa-dharmachakra"></i><h4>Aşk Çarkıfeleği</h4></div>
-                <div class="game-card" onclick="openGame('snake')"><i class="fa-solid fa-staff-snake"></i><h4>Aşk Yılanı</h4></div>
-                <div class="game-card" onclick="openGame('rps')"><i class="fa-solid fa-hand-scissors"></i><h4>Taş Kağıt Makas</h4></div>
-                <div class="game-card" onclick="openGame('escapeBtn')"><i class="fa-solid fa-face-kiss-wink-heart"></i><h4>Beni Seviyor musun?</h4></div>
+            <div class="glass-card">
+                <h2 class="section-title" style="margin-top:0;"><i class="fa-solid fa-gamepad"></i> Mini Oyunlarımız</h2>
+                <div class="games-grid">
+                    <div class="game-card" onclick="openGame('catcher', this)"><i class="fa-solid fa-hand-holding-heart"></i><h4>Kalp Yakalama</h4></div>
+                    <div class="game-card" onclick="openGame('memory', this)"><i class="fa-solid fa-brain"></i><h4>Aşk Hafızası</h4></div>
+                    <div class="game-card" onclick="openGame('quiz', this)"><i class="fa-solid fa-circle-question"></i><h4>Aşk Quizi</h4></div>
+                    <div class="game-card" onclick="openGame('pop', this)"><i class="fa-solid fa-burst"></i><h4>Kalp Patlat</h4></div>
+                    <div class="game-card" onclick="openGame('wheel', this)"><i class="fa-solid fa-dharmachakra"></i><h4>Aşk Çarkıfeleği</h4></div>
+                    <div class="game-card" onclick="openGame('snake', this)"><i class="fa-solid fa-staff-snake"></i><h4>Aşk Yılanı</h4></div>
+                    <div class="game-card" onclick="openGame('rps', this)"><i class="fa-solid fa-hand-scissors"></i><h4>Taş Kağıt Makas</h4></div>
+                    <div class="game-card" onclick="openGame('escapeBtn', this)"><i class="fa-solid fa-face-kiss-wink-heart"></i><h4>Beni Seviyor musun?</h4></div>
+                </div>
+
+                <!-- OYUN ALT SAHNESİ (Seçilen Oyun Burada Açılacak) -->
+                <div class="inline-game-stage" id="inlineGameStage">
+                    <span class="close-stage-btn" onclick="closeGame()">&times;</span>
+                    <div id="gameContainer"></div>
+                </div>
             </div>
 
             <!-- ÇİZİM TUVALİ -->
@@ -267,7 +325,6 @@
                     <iframe id="seriesIframe" src="https://www.youtube-nocookie.com/embed/5pLiSY5l8uE?rel=0&modestbranding=1" allowfullscreen></iframe>
                 </div>
 
-                <!-- BÖLÜM SEÇME BUTONLARI -->
                 <div class="episode-buttons">
                     <button class="btn-ep active" onclick="changeEpisode('5pLiSY5l8uE', this)">1. Bölüm</button>
                     <button class="btn-ep" onclick="changeEpisode('k1X8xW9E_gI', this)">2. Bölüm</button>
@@ -282,14 +339,6 @@
                 </div>
             </div>
 
-        </div>
-    </div>
-
-    <!-- MODAL -->
-    <div class="modal" id="gameModal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeGame()">&times;</span>
-            <div id="gameContainer"></div>
         </div>
     </div>
 
@@ -351,7 +400,6 @@
             document.getElementById('dailyNoteText').innerText = dailyNotes[Math.floor(Math.random() * dailyNotes.length)];
         }
 
-        /* DİZİ BÖLÜM DEĞİŞTİRME */
         function changeEpisode(videoPath, btn) {
             document.querySelectorAll('.btn-ep').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
@@ -418,19 +466,23 @@
             photos.forEach(src => {
                 const div = document.createElement('div');
                 div.className = 'polaroid';
-                div.innerHTML = `<img src="${src}"><p style="font-family:'Dancing Script'; font-size: 1.1rem; margin-top:4px;">Bizim Anımız ❤️️</p>`;
+                div.innerHTML = `<img src="${src}"><p style="font-family:'Dancing Script'; font-size: 1.1rem; margin-top:4px;">Bizim Anımız ❤</p>`;
                 slider.appendChild(div);
             });
         }
 
-        /* 8 MİNİ OYUN MANTIĞI */
+        /* ALT SAHNEDE OYUN BAŞLATMA MANTIĞI */
         let gameInterval = null;
         let sX = 90, sY = 90, foodX = 30, foodY = 30;
 
-        function openGame(gameType) {
-            const modal = document.getElementById('gameModal');
+        function openGame(gameType, cardElem) {
+            document.querySelectorAll('.game-card').forEach(card => card.classList.remove('active-game'));
+            if(cardElem) cardElem.classList.add('active-game');
+
+            const stage = document.getElementById('inlineGameStage');
             const container = document.getElementById('gameContainer');
-            modal.style.display = 'flex';
+            stage.style.display = 'block';
+            
             if(gameInterval) clearInterval(gameInterval);
 
             if(gameType === 'escapeBtn') {
@@ -453,9 +505,9 @@
                 container.innerHTML = `
                     <h3>Aşk Quizi ❤️</h3>
                     <p style="margin-top:10px;">Benim en sevdiğim özelliğin nedir?</p>
-                    <div style="display:flex; flex-direction:column; gap:8px; margin-top:15px;">
+                    <div style="display:flex; flex-direction:column; gap:8px; margin-top:15px; max-width:300px; margin-left:auto; margin-right:auto;">
                         <button class="btn-love" style="background:white; color:var(--primary); border:1px solid var(--primary);" onclick="alert('Doğru cevap! Sıcacık gülüşün benim her şeyim ❤️')">A) Sıcacık Gülüşün</button>
-                        <button class="btn-love" style="background:white; color:var(--primary); border:1px solid var(--primary);" onclick="alert('Doğru cevap! Kocaman merhametli kalbin benim huzurum ❤️')">B) Kocaman Merhametli Kalbin</button>
+                        <button class="btn-love" style="background:white; color:var(--primary); border:1px solid var(--primary);" onclick="alert('Doğru cevap! Kocaman merhametli kalbin benim huzurum ❤️️')">B) Kocaman Merhametli Kalbin</button>
                         <button class="btn-love" style="background:white; color:var(--primary); border:1px solid var(--primary);" onclick="alert('Tam isabet! Hepsi benim için çok özel ❤️')">C) Hepsi!</button>
                     </div>
                 `;
@@ -477,7 +529,7 @@
                 icons.sort(() => 0.5 - Math.random());
                 container.innerHTML = `
                     <h3>Aşk Hafızası 🧠</h3>
-                    <div class="memory-grid" id="memoryGrid"></div>
+                    <div class="memory-grid" id="memoryGrid" style="max-width:300px; margin:15px auto 0;"></div>
                 `;
                 const grid = document.getElementById('memoryGrid');
                 let flipped = [];
@@ -600,10 +652,14 @@
                     </div>
                 `;
             }
+
+            stage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
 
         function closeGame() { 
-            document.getElementById('gameModal').style.display = 'none'; 
+            const stage = document.getElementById('inlineGameStage');
+            stage.style.display = 'none'; 
+            document.querySelectorAll('.game-card').forEach(card => card.classList.remove('active-game'));
             if(gameInterval) clearInterval(gameInterval);
         }
 
@@ -653,9 +709,9 @@
             }
         }
 
-        // Klavye Yön Tuşları Desteği (Yılan Oyunu İçin)
         window.addEventListener('keydown', (e) => {
-            if(document.getElementById('gameModal').style.display === 'flex') {
+            const stage = document.getElementById('inlineGameStage');
+            if(stage && stage.style.display === 'block') {
                 if(e.key === 'ArrowUp') moveSnake('up');
                 if(e.key === 'ArrowDown') moveSnake('down');
                 if(e.key === 'ArrowLeft') moveSnake('left');
