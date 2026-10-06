@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ceyda'm & Ben - Bizim Dünyamız</title>
+    <title>Ceyda'm & Ben - Aşk Dünyamız</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
@@ -13,8 +13,8 @@
             --accent: #ffe6ea;
             --dark: #2d132c;
             --light: #fff5f7;
-            --glass: rgba(255, 255, 255, 0.85);
-            --shadow: 0 8px 32px 0 rgba(255, 75, 114, 0.2);
+            --glass: rgba(255, 255, 255, 0.9);
+            --shadow: 0 10px 30px rgba(255, 75, 114, 0.15);
         }
 
         * {
@@ -32,208 +32,91 @@
             overflow-x: hidden;
         }
 
-        /* --- ŞİFRE EKRANI --- */
+        /* YÜZEN KALPLER */
+        .heart-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 0; overflow: hidden;
+        }
+        .heart-particle {
+            position: absolute; color: var(--secondary); opacity: 0.5;
+            animation: floatUp linear infinite;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0); opacity: 0.8; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+        }
+
+        /* GİRİŞ EKRANI */
         #login-screen {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
             display: flex; justify-content: center; align-items: center;
-            z-index: 9999;
-            transition: opacity 0.8s ease, visibility 0.8s;
+            z-index: 9999; transition: opacity 0.8s ease, visibility 0.8s;
         }
-
         .login-card {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 40px 30px;
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-            text-align: center;
-            max-width: 400px; width: 90%;
-            backdrop-filter: blur(10px);
-            animation: pulse 2s infinite ease-in-out;
+            background: white; padding: 40px 30px; border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2); text-align: center;
+            max-width: 380px; width: 90%;
         }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-        }
-
         .login-card h1 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 2.8rem;
-            color: var(--primary);
+            font-family: 'Dancing Script', cursive; font-size: 3rem; color: var(--primary);
             margin-bottom: 10px;
         }
-
         .pin-input {
-            width: 100%;
-            padding: 15px;
-            font-size: 1.5rem;
-            text-align: center;
-            letter-spacing: 10px;
-            border: 2px solid var(--secondary);
-            border-radius: 12px;
-            margin: 20px 0;
-            outline: none;
-            transition: 0.3s;
+            width: 100%; padding: 15px; font-size: 1.6rem; text-align: center;
+            letter-spacing: 8px; border: 2px solid var(--secondary); border-radius: 12px;
+            margin: 20px 0; outline: none; transition: 0.3s;
         }
-
-        .pin-input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 15px rgba(255, 75, 114, 0.4);
-        }
+        .pin-input:focus { border-color: var(--primary); box-shadow: 0 0 12px rgba(255, 75, 114, 0.3); }
 
         .btn-love {
             background: linear-gradient(45deg, var(--primary), var(--secondary));
-            color: white; border: none;
-            padding: 12px 30px; font-size: 1.1rem; font-weight: 600;
-            border-radius: 25px; cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255, 75, 114, 0.4);
-            transition: transform 0.2s, box-shadow 0.2s;
-            width: 100%;
+            color: white; border: none; padding: 12px 28px; font-size: 1rem; font-weight: 600;
+            border-radius: 25px; cursor: pointer; box-shadow: 0 5px 15px rgba(255, 75, 114, 0.3);
+            transition: 0.3s; width: 100%; display: inline-block; text-decoration: none;
         }
+        .btn-love:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255, 75, 114, 0.5); }
 
-        .btn-love:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255, 75, 114, 0.6);
-        }
-
-        /* --- ANA İÇERİK --- */
-        #main-content {
-            display: none;
-            opacity: 0;
-            transition: opacity 1s ease;
-            padding-bottom: 60px;
-        }
-
-        header {
-            text-align: center;
-            padding: 50px 20px 30px;
-            background: rgba(255,255,255,0.4);
-            backdrop-filter: blur(5px);
-            border-bottom: 1px solid rgba(255,255,255,0.6);
-        }
-
-        header h1 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 3.5rem;
-            color: var(--primary);
-        }
+        /* ANA SAYFA */
+        #main-content { display: none; opacity: 0; transition: opacity 0.8s ease; position: relative; z-index: 1; }
+        header { text-align: center; padding: 40px 20px 20px; }
+        header h1 { font-family: 'Dancing Script', cursive; font-size: 3.5rem; color: var(--primary); }
 
         /* SAYAÇ */
-        .timer-container {
-            display: flex; justify-content: center; gap: 15px;
-            margin-top: 20px; flex-wrap: wrap;
-        }
-
+        .timer-container { display: flex; justify-content: center; gap: 12px; margin-top: 15px; flex-wrap: wrap; }
         .timer-box {
-            background: white; padding: 12px 20px;
-            border-radius: 16px; box-shadow: var(--shadow);
-            text-align: center; min-width: 80px;
+            background: white; padding: 10px 18px; border-radius: 16px;
+            box-shadow: var(--shadow); text-align: center; min-width: 75px;
         }
+        .timer-box span { display: block; font-size: 1.6rem; font-weight: 700; color: var(--primary); }
+        .timer-box label { font-size: 0.75rem; color: #777; text-transform: uppercase; }
 
-        .timer-box span {
-            display: block; font-size: 1.8rem; font-weight: 700; color: var(--primary);
-        }
-
-        .timer-box label {
-            font-size: 0.8rem; color: #666; text-transform: uppercase;
-        }
-
-        /* DÜZEN VE KARTLAR */
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
         .section-title {
-            text-align: center;
-            font-size: 2rem;
-            color: var(--dark);
-            margin: 40px 0 20px;
+            text-align: center; font-size: 1.8rem; color: var(--dark); margin: 35px 0 20px;
             display: flex; align-items: center; justify-content: center; gap: 10px;
         }
-
         .glass-card {
-            background: var(--glass);
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: var(--shadow);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.8);
-            margin-bottom: 30px;
-        }
-
-        /* OYUNLAR GRID */
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-        }
-
-        .game-card {
-            background: white; border-radius: 16px; padding: 20px;
-            text-align: center; cursor: pointer; transition: 0.3s;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            border: 2px solid transparent;
-        }
-
-        .game-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--secondary);
-            box-shadow: var(--shadow);
-        }
-
-        .game-card i {
-            font-size: 2.5rem; color: var(--primary); margin-bottom: 12px;
-        }
-
-        /* OYUN MODALI */
-        .modal {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6); display: none;
-            justify-content: center; align-items: center; z-index: 10000;
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-content {
-            background: white; width: 90%; max-width: 600px;
-            border-radius: 20px; padding: 25px; position: relative;
-            max-height: 90vh; overflow-y: auto; text-align: center;
-        }
-
-        .close-btn {
-            position: absolute; top: 15px; right: 20px;
-            font-size: 1.8rem; cursor: pointer; color: #888;
+            background: var(--glass); border-radius: 20px; padding: 25px;
+            box-shadow: var(--shadow); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.8); margin-bottom: 25px;
         }
 
         /* 365 GÜN KAVANOZU */
-        .jar-container {
-            text-align: center; cursor: pointer;
-        }
-        .jar-icon {
-            font-size: 5rem; color: #e91e63; transition: transform 0.3s;
-        }
-        .jar-container:hover .jar-icon { transform: scale(1.1) rotate(5deg); }
+        .jar-container { text-align: center; cursor: pointer; padding: 10px; }
+        .jar-icon { font-size: 4.5rem; color: var(--primary); transition: transform 0.3s; }
+        .jar-container:hover .jar-icon { transform: scale(1.1) rotate(6deg); }
 
-        /* AŞK KUPONLARI */
-        .coupons-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;
-        }
+        /* KUPONLAR */
+        .coupons-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
         .coupon-card {
-            background: #fff0f3; border: 2px dashed var(--primary);
-            border-radius: 12px; padding: 15px; text-align: center;
-            position: relative;
+            background: #fff0f3; border: 2px dashed var(--primary); border-radius: 14px;
+            padding: 15px; text-align: center;
         }
 
-        /* 3D KARTLAR (NEDEN CEYDA) */
-        .cards-3d {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;
-        }
-        .flip-card {
-            background-color: transparent; height: 120px; perspective: 1000px; cursor: pointer;
-        }
+        /* 3D KARTLAR */
+        .cards-3d { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        .flip-card { height: 110px; perspective: 1000px; cursor: pointer; }
         .flip-card-inner {
             position: relative; width: 100%; height: 100%; text-align: center;
             transition: transform 0.6s; transform-style: preserve-3d;
@@ -241,75 +124,66 @@
         .flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
         .flip-front, .flip-back {
             position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
-            border-radius: 15px; display: flex; align-items: center; justify-content: center;
-            padding: 10px; font-weight: 600; box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 14px; display: flex; align-items: center; justify-content: center; padding: 10px;
         }
-        .flip-front { background: white; color: var(--primary); border: 2px solid var(--accent); }
-        .flip-back { background: var(--primary); color: white; transform: rotateY(180deg); font-size: 0.9rem; }
+        .flip-front { background: white; color: var(--primary); border: 2px solid var(--accent); font-weight: 600; }
+        .flip-back { background: var(--primary); color: white; transform: rotateY(180deg); font-size: 0.85rem; }
 
-        /* CANVAS / ÇİZİM */
-        #loveCanvas {
-            border: 2px dashed var(--secondary); background: white; border-radius: 12px; cursor: crosshair;
+        /* OYUNLAR GRID */
+        .games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 15px; }
+        .game-card {
+            background: white; border-radius: 16px; padding: 20px; text-align: center;
+            cursor: pointer; transition: 0.3s; box-shadow: var(--shadow);
         }
+        .game-card:hover { transform: translateY(-4px); }
+        .game-card i { font-size: 2.2rem; color: var(--primary); margin-bottom: 10px; }
 
-        /* POLAROID GALERİ & YÜKLEME */
-        .gallery-slider {
-            display: flex; gap: 15px; overflow-x: auto; padding: 15px 0;
-            scroll-snap-type: x mandatory;
-        }
+        /* GALERİ */
+        .gallery-slider { display: flex; gap: 15px; overflow-x: auto; padding: 10px 0; }
         .polaroid {
-            background: white; padding: 10px 10px 25px; border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15); min-width: 200px;
-            scroll-snap-align: center; text-align: center;
+            background: white; padding: 10px 10px 20px; border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); min-width: 180px; text-align: center;
         }
-        .polaroid img {
-            width: 100%; height: 180px; object-fit: cover; border-radius: 4px;
-        }
+        .polaroid img { width: 100%; height: 150px; object-fit: cover; border-radius: 4px; }
 
-        /* YOUTUBE DİZİ ALANI */
-        .video-container {
-            position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px;
-        }
-        .video-container iframe {
-            position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0;
-        }
+        /* YOUTUBE VIDEO */
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px; }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
-        /* YÜZEN KALPLER */
-        .heart-bg {
+        /* MODAL */
+        .modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: -1; overflow: hidden;
+            background: rgba(0,0,0,0.5); display: none; justify-content: center;
+            align-items: center; z-index: 10000; backdrop-filter: blur(4px);
         }
-        .heart-particle {
-            position: absolute; color: var(--secondary); opacity: 0.6;
-            animation: floatUp linear infinite;
+        .modal-content {
+            background: white; width: 90%; max-width: 500px; border-radius: 20px;
+            padding: 25px; position: relative; text-align: center;
         }
-        @keyframes floatUp {
-            0% { transform: translateY(100vh) scale(0); opacity: 1; }
-            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
-        }
+        .close-btn { position: absolute; top: 12px; right: 18px; font-size: 1.6rem; cursor: pointer; color: #888; }
     </style>
 </head>
 <body>
 
     <div class="heart-bg" id="heartBg"></div>
 
-    <!-- 1. ŞİFRE EKRANI -->
+    <!-- ŞİFRE EKRANI -->
     <div id="login-screen">
         <div class="login-card">
-            <i class="fa-solid fa-heart-lock" style="font-size: 3.5rem; color: var(--primary); margin-bottom: 10px;"></i>
+            <i class="fa-solid fa-heart-circle-bolt" style="font-size: 3.5rem; color: var(--primary); margin-bottom: 10px;"></i>
             <h1>Ceyda'm İçin...</h1>
-            <p>Aşkımızın gizli dünyasına giriş yap ❤️️</p>
+            <p style="color:#666; font-size:0.9rem;">Özel dünyamıza giriş şifresini gir ❤</p>
             <input type="password" id="pinInput" class="pin-input" maxlength="4" placeholder="****">
             <button class="btn-love" onclick="checkPin()">Giriş Yap</button>
-            <p id="errorMessage" style="color: red; margin-top: 10px; display: none; font-size: 0.9rem;"></p>
+            <p id="errorMessage" style="color: red; margin-top: 10px; display: none; font-size: 0.85rem;"></p>
         </div>
     </div>
 
-    <!-- 2. ANA SAYFA İÇERİĞİ -->
+    <!-- ANA İÇERİK -->
     <div id="main-content">
         <header>
             <h1>Hoş Geldin Ceyda'm ❤️</h1>
-            <p style="color: #666; margin-top: 5px;">Seni Her Gün Daha Çok Sevdiğim Gün Sayısı:</p>
+            <p style="color: #666; font-size: 0.9rem; margin-top: 5px;">Aşkımızın Her Anını Sayıyoruz:</p>
             <div class="timer-container">
                 <div class="timer-box"><span id="days">00</span><label>Gün</label></div>
                 <div class="timer-box"><span id="hours">00</span><label>Saat</label></div>
@@ -320,140 +194,95 @@
 
         <div class="container">
 
-            <!-- 🫙 365 GÜN SEVGİ KAVANOZU -->
+            <!-- 365 GÜN KAVANOZU -->
             <div class="glass-card text-center" style="text-align: center;">
-                <h2 style="color: var(--primary); margin-bottom: 10px;"><i class="fa-solid fa-jar"></i> Günlük Sevgi Kavanozu</h2>
-                <p>Her gün tıkla ve Ceyda'm senin için bıraktığım bugünkü sürpriz notunu oku!</p>
-                <div class="jar-container" onclick="openDailyNote()" style="margin-top: 15px;">
+                <h2 style="color: var(--primary); margin-bottom: 5px;"><i class="fa-solid fa-jar"></i> Günlük Sevgi Kavanozu</h2>
+                <p style="font-size: 0.85rem; color: #666;">Ceyda'm her gün kavanoza tıkla ve günün mesajını al!</p>
+                <div class="jar-container" onclick="openDailyNote()">
                     <i class="fa-solid fa-jar-wheat jar-icon"></i>
                 </div>
-                <p id="dailyNoteText" style="margin-top: 15px; font-weight: 600; color: var(--dark); font-size: 1.1rem; min-height: 30px;"></p>
+                <p id="dailyNoteText" style="font-weight: 600; color: var(--dark); min-height: 25px; margin-top: 5px;"></p>
             </div>
 
-            <!-- 🎫 AŞK KUPONLARI -->
+            <!-- AŞK KUPONLARI -->
             <div class="glass-card">
-                <h2 class="section-title" style="margin-top: 0;"><i class="fa-solid fa-ticket"></i> Ceyda'ya Özel Aşk Kuponları</h2>
+                <h2 class="section-title" style="margin-top: 0;"><i class="fa-solid fa-ticket"></i> Ceyda'ya Özel Kuponlar</h2>
                 <div class="coupons-grid">
                     <div class="coupon-card">
-                        <h4>💆‍♂️ 20 Dk Omuz Masajı</h4>
-                        <p style="font-size:0.8rem; color:#777; margin:5px 0;">Ne zaman istersen geçerli!</p>
-                        <button class="btn-love" style="padding: 5px 10px; font-size: 0.8rem;" onclick="useCoupon('20 Dk Masaj')">Kullan</button>
+                        <h4>💆‍♂️ 20 Dk Masaj</h4>
+                        <button class="btn-love" style="padding: 4px 10px; font-size: 0.75rem; margin-top:8px;" onclick="alert('Kupon Kullanıldı! Hazırlanıyorum ❤️')">Kullan</button>
                     </div>
                     <div class="coupon-card">
                         <h4>🍕 En Sevdiğin Yemek</h4>
-                        <p style="font-size:0.8rem; color:#777; margin:5px 0;">Beni mutfağa sokma kuponu!</p>
-                        <button class="btn-love" style="padding: 5px 10px; font-size: 0.8rem;" onclick="useCoupon('En Sevdiğin Yemek')">Kullan</button>
+                        <button class="btn-love" style="padding: 4px 10px; font-size: 0.75rem; margin-top:8px;" onclick="alert('Kupon Kullanıldı! Mutfak benim ❤️')">Kullan</button>
                     </div>
                     <div class="coupon-card">
-                        <h4>🕊️ Haklısın Tartışmasız</h4>
-                        <p style="font-size:0.8rem; color:#777; margin:5px 0;">Anında haklı çıkma hakkı.</p>
-                        <button class="btn-love" style="padding: 5px 10px; font-size: 0.8rem;" onclick="useCoupon('Haklısın Kuponu')">Kullan</button>
+                        <h4>🕊️ Tamamen Haklısın</h4>
+                        <button class="btn-love" style="padding: 4px 10px; font-size: 0.75rem; margin-top:8px;" onclick="alert('Kupon Kullanıldı! Haklısın birtanem ❤️')">Kullan</button>
                     </div>
                     <div class="coupon-card">
-                        <h4>🎬 Dizi/Film Seçme</h4>
-                        <p style="font-size:0.8rem; color:#777; margin:5px 0;">Kumanda tamamen sende!</p>
-                        <button class="btn-love" style="padding: 5px 10px; font-size: 0.8rem;" onclick="useCoupon('Dizi Seçimi')">Kullan</button>
+                        <h4>🎬 Dizi/Film Seçimi</h4>
+                        <button class="btn-love" style="padding: 4px 10px; font-size: 0.75rem; margin-top:8px;" onclick="alert('Kupon Kullanıldı! Kumanda sende ❤️')">Kullan</button>
                     </div>
                 </div>
             </div>
 
-            <!-- 🎴 3D NEDEN CEYDA KARTLARI -->
+            <!-- 3D NEDEN CEYDA KARTLARI -->
             <div class="glass-card">
                 <h2 class="section-title" style="margin-top: 0;"><i class="fa-solid fa-heart"></i> Seni Neden Çok Seviyorum?</h2>
-                <p style="text-align: center; margin-bottom: 15px; font-size: 0.9rem;">Kartların üzerine gelip çevir!</p>
                 <div class="cards-3d">
-                    <div class="flip-card"><div class="flip-card-inner"><div class="flip-front">Gülüşün ✨</div><div class="flip-back">Dünyadaki tüm dertleri unutturan o sıcacık gülüşün için.</div></div></div>
-                    <div class="flip-card"><div class="flip-card-inner"><div class="flip-front">Kalbin ❤️</div><div class="flip-back">Herkese karşı o kocaman, merhametli ve saf sevgin için.</div></div></div>
-                    <div class="flip-card"><div class="flip-card-inner"><div class="flip-front">Bakışların 👀</div><div class="flip-back">Gözlerimin içine bakarken hissettiğim o huzur için.</div></div></div>
-                    <div class="flip-card"><div class="flip-card-inner"><div class="flip-front">Varlığın 🌹</div><div class="flip-back">Hayatımda olduğun her güne şükretmemi sağladığın için.</div></div></div>
+                    <div class="flip-card"><div class="flip-card-inner"><div class="flip-front">Gülüşün ✨</div><div class="flip-back">Dünyadaki tüm dertleri unutturan sıcacık gülüşün için.</div></div></div>
+                    <div class="flip-card"><div class="flip-card-inner"><div class="flip-front">Kalbin ❤️</div><div class="flip-back">Herkese karşı o kocaman, merhametli sevgin için.</div></div></div>
+                    <div class="flip-card"><div class="flip-card-inner"><div class="flip-front">Bakışların 👀</div><div class="flip-back">Gözlerimin içine bakarken hissettiğim huzur için.</div></div></div>
+                    <div class="flip-card"><div class="flip-card-inner"><div class="flip-front">Varlığın 🌹</div><div class="flip-back">Hayatımda olduğun her güne şükrettirdiğin için.</div></div></div>
                 </div>
             </div>
 
-            <!-- 8 MİNİ OYUN ALANI -->
-            <h2 class="section-title"><i class="fa-solid fa-gamepad"></i> Eğlenceli Mini Oyunlarımız (8 Tane)</h2>
+            <!-- 8 MİNİ OYUN -->
+            <h2 class="section-title"><i class="fa-solid fa-gamepad"></i> Mini Oyunlarımız (8 Tane)</h2>
             <div class="games-grid">
-                <div class="game-card" onclick="openGame('heartCatcher')">
-                    <i class="fa-solid fa-hand-holding-heart"></i>
-                    <h3>Kalp Yakalama</h3>
-                    <p style="font-size:0.8rem; color:#666;">Yukarıdan düşen kalpleri yakala!</p>
-                </div>
-                <div class="game-card" onclick="openGame('memory')">
-                    <i class="fa-solid fa-brain"></i>
-                    <h3>Aşk Hafızası</h3>
-                    <p style="font-size:0.8rem; color:#666;">Çift eşleştirme kart oyunu.</p>
-                </div>
-                <div class="game-card" onclick="openGame('quiz')">
-                    <i class="fa-solid fa-circle-question"></i>
-                    <h3>Aşk Quizi</h3>
-                    <p style="font-size:0.8rem; color:#666;">Bizim hakkımızdaki soruları bil!</p>
-                </div>
-                <div class="game-card" onclick="openGame('popIt')">
-                    <i class="fa-solid fa-burst"></i>
-                    <h3>Kalp Patlat</h3>
-                    <p style="font-size:0.8rem; color:#666;">Balon kalpleri tıkla patlat!</p>
-                </div>
-                <div class="game-card" onclick="openGame('wheel')">
-                    <i class="fa-solid fa-dharmachakra"></i>
-                    <h3>Aşk Çarkıfeleği</h3>
-                    <p style="font-size:0.8rem; color:#666;">Çevir ve tatlı bir ceza/ödül kazan!</p>
-                </div>
-                <div class="game-card" onclick="openGame('snake')">
-                    <i class="fa-solid fa-staff-snake"></i>
-                    <h3>Aşk Yılanı</h3>
-                    <p style="font-size:0.8rem; color:#666;">Kalpleri yedikçe büyüyen yılan.</p>
-                </div>
-                <div class="game-card" onclick="openGame('rps')">
-                    <i class="fa-solid fa-hand-scissors"></i>
-                    <h3>Taş Kağıt Makas</h3>
-                    <p style="font-size:0.8rem; color:#666;">Aşkımızın rekabeti!</p>
-                </div>
-                <div class="game-card" onclick="openGame('escapeBtn')">
-                    <i class="fa-solid fa-face-kiss-wink-heart"></i>
-                    <h3>Beni Seviyor musun?</h3>
-                    <p style="font-size:0.8rem; color:#666;">"Hayır" butonuna basabilirsen bas!</p>
+                <div class="game-card" onclick="openGame('Kalp Yakalama')"><i class="fa-solid fa-hand-holding-heart"></i><h4>Kalp Yakalama</h4></div>
+                <div class="game-card" onclick="openGame('Aşk Hafızası')"><i class="fa-solid fa-brain"></i><h4>Aşk Hafızası</h4></div>
+                <div class="game-card" onclick="openGame('Aşk Quizi')"><i class="fa-solid fa-circle-question"></i><h4>Aşk Quizi</h4></div>
+                <div class="game-card" onclick="openGame('Kalp Patlat')"><i class="fa-solid fa-burst"></i><h4>Kalp Patlat</h4></div>
+                <div class="game-card" onclick="openGame('wheel')"><i class="fa-solid fa-dharmachakra"></i><h4>Aşk Çarkıfeleği</h4></div>
+                <div class="game-card" onclick="openGame('Aşk Yılanı')"><i class="fa-solid fa-staff-snake"></i><h4>Aşk Yılanı</h4></div>
+                <div class="game-card" onclick="openGame('Taş Kağıt Makas')"><i class="fa-solid fa-hand-scissors"></i><h4>Taş Kağıt Makas</h4></div>
+                <div class="game-card" onclick="openGame('escapeBtn')"><i class="fa-solid fa-face-kiss-wink-heart"></i><h4>Beni Seviyor musun?</h4></div>
+            </div>
+
+            <!-- ÇİZİM TUVALİ -->
+            <div class="glass-card text-center" style="margin-top: 30px; text-align: center;">
+                <h2 style="color: var(--primary); margin-bottom: 5px;"><i class="fa-solid fa-palette"></i> Ceyda'nın Çizim Tuvalı</h2>
+                <canvas id="loveCanvas" width="280" height="180" style="border:2px dashed var(--secondary); background:white; border-radius:12px; cursor:crosshair;"></canvas>
+                <div style="margin-top: 8px;">
+                    <button class="btn-love" style="padding: 4px 15px; font-size: 0.8rem; width:auto;" onclick="clearCanvas()">Temizle</button>
                 </div>
             </div>
 
-            <!-- 🎨 CEYDA'YA ÖZEL ÇİZİM TUVALİ -->
-            <div class="glass-card" style="margin-top: 40px; text-align: center;">
-                <h2 style="color: var(--primary); margin-bottom: 10px;"><i class="fa-solid fa-palette"></i> Ceyda'nın Çizim Tuvalı</h2>
-                <p style="margin-bottom: 10px; font-size: 0.9rem;">Ekrana parmağınla veya fareyle kalpler çiz!</p>
-                <canvas id="loveCanvas" width="300" height="200"></canvas>
-                <div style="margin-top: 10px;">
-                    <button class="btn-love" style="padding: 5px 15px; font-size: 0.9rem;" onclick="clearCanvas()">Temizle</button>
-                </div>
-            </div>
-
-            <!-- 📸 POLAROID ANILARIMIZ VE FOTOĞRAF YÜKLEME -->
+            <!-- POLAROID GALERİ -->
             <div class="glass-card">
                 <h2 class="section-title" style="margin-top: 0;"><i class="fa-solid fa-camera-retro"></i> Anı Galerimiz</h2>
                 <div class="gallery-slider" id="gallerySlider">
-                    <div class="polaroid">
-                        <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=400&q=80" alt="Anı 1">
-                        <p style="font-family:'Dancing Script'; font-size: 1.2rem; margin-top:5px;">İlk Gülüşün ❤️</p>
-                    </div>
-                    <div class="polaroid">
-                        <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=400&q=80" alt="Anı 2">
-                        <p style="font-family:'Dancing Script'; font-size: 1.2rem; margin-top:5px;">Unutulmaz Gün ✨</p>
-                    </div>
+                    <div class="polaroid"><img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=300&q=80"><p style="font-family:'Dancing Script'; font-size: 1.1rem; margin-top:4px;">Gülüşün ❤️</p></div>
+                    <div class="polaroid"><img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=300&q=80"><p style="font-family:'Dancing Script'; font-size: 1.1rem; margin-top:4px;">Unutulmaz Gün ✨</p></div>
                 </div>
-                <div style="text-align: center; margin-top: 15px;">
-                    <label class="btn-love" style="cursor: pointer; display: inline-block;">
+                <div style="text-align: center; margin-top: 12px;">
+                    <label class="btn-love" style="cursor: pointer; display: inline-block; width:auto; font-size:0.85rem; padding: 8px 20px;">
                         <i class="fa-solid fa-plus"></i> Fotoğraf Ekle
                         <input type="file" accept="image/*" style="display: none;" onchange="uploadPhoto(event)">
                     </label>
                 </div>
             </div>
 
-            <!-- 🎬 İNADINA AŞK DİZİ İZLEME ALANI -->
+            <!-- İNADINA AŞK DİZİ İZLEME -->
             <div class="glass-card">
                 <h2 class="section-title" style="margin-top: 0;"><i class="fa-solid fa-tv"></i> İnadına Aşk İzleme Alanımız</h2>
-                <p style="text-align: center; margin-bottom: 15px; color: #666;">Birlikte keyifle izlememiz için!</p>
                 <div class="video-container">
                     <iframe src="https://www.youtube-nocookie.com/embed/5pLiSY5l8uE?rel=0&modestbranding=1" allowfullscreen></iframe>
                 </div>
-                <div style="text-align: center; margin-top: 15px;">
-                    <a href="https://www.youtube.com/watch?v=5pLiSY5l8uE" target="_blank" class="btn-love" style="text-decoration: none; display: inline-block; width: auto;">
+                <div style="text-align: center; margin-top: 12px;">
+                    <a href="https://www.youtube.com/watch?v=5pLiSY5l8uE" target="_blank" class="btn-love" style="width: auto; font-size:0.85rem; padding: 8px 20px;">
                         <i class="fa-brands fa-youtube"></i> YouTube Uygulamasında Aç
                     </a>
                 </div>
@@ -462,7 +291,7 @@
         </div>
     </div>
 
-    <!-- OYUN MODAL POPUP -->
+    <!-- MODAL -->
     <div class="modal" id="gameModal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeGame()">&times;</span>
@@ -471,7 +300,6 @@
     </div>
 
     <script>
-        // ŞİFRE KONTROLÜ (2386)
         function checkPin() {
             const input = document.getElementById('pinInput').value;
             const error = document.getElementById('errorMessage');
@@ -488,16 +316,14 @@
                 }, 800);
             } else {
                 error.style.display = 'block';
-                error.innerText = 'Yanlış Şifre Ceyda'm! İpucu: Özel tarihimiz/kodumuz ❤️';
+                error.innerText = 'Yanlış Şifre Ceyda\'m! ❤';
             }
         }
 
-        // SEVGİ SAYACI (Aşk Başlangıcı varsayılan olarak güncellenebilir)
         function startTimer() {
-            const startDate = new Date('2023-01-01T00:00:00'); // Kendi özel tarihinizi buraya yazabilirsiniz
+            const startDate = new Date('2023-01-01T00:00:00');
             setInterval(() => {
-                const now = new Date();
-                const diff = now - startDate;
+                const diff = new Date() - startDate;
                 document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
                 document.getElementById('hours').innerText = Math.floor((diff / (1000 * 60 * 60)) % 24);
                 document.getElementById('minutes').innerText = Math.floor((diff / 1000 / 60) % 60);
@@ -505,73 +331,53 @@
             }, 1000);
         }
 
-        // YÜZEN KALPLER
         function createHearts() {
             const container = document.getElementById('heartBg');
-            for(let i=0; i<20; i++) {
+            for(let i=0; i<15; i++) {
                 const heart = document.createElement('i');
                 heart.className = 'fa-solid fa-heart heart-particle';
                 heart.style.left = Math.random() * 100 + 'vw';
                 heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
-                heart.style.fontSize = (Math.random() * 15 + 10) + 'px';
+                heart.style.fontSize = (Math.random() * 12 + 10) + 'px';
                 container.appendChild(heart);
             }
         }
         createHearts();
 
-        // 🫙 GÜNLÜK SEVGİ NOTLARI
         const dailyNotes = [
-            "Bugün de en çok senin gülüşün aklımda!",
-            "İyi ki varsın Ceyda'm, dünyamı güzelleştiriyorsun.",
-            "Seni her gün bir önceki günden daha çok seviyorum.",
-            "Sen benim en güzel iyikimsin ❤️",
-            "Kahvenin ilk yudumu gibi huzur veriyorsun bana."
+            "Bugün de en çok senin gülüşün aklımda Ceyda'm!",
+            "İyi ki varsın, dünyamı güzelleştiriyorsun ❤️",
+            "Seni her gün daha çok seviyorum.",
+            "Sen benim en güzel iyikimsin ✨"
         ];
         function openDailyNote() {
-            const note = dailyNotes[Math.floor(Math.random() * dailyNotes.length)];
-            document.getElementById('dailyNoteText').innerText = note;
+            document.getElementById('dailyNoteText').innerText = dailyNotes[Math.floor(Math.random() * dailyNotes.length)];
         }
 
-        // 🎫 KUPON KULLANIMI
-        function useCoupon(title) {
-            alert(`🎉 Ceyda "${title}" kuponunu kullandı! Sözüm söz, hazır ol ❤️`);
-        }
-
-        // 🎨 ÇİZİM TUVALİ
         let canvas, ctx, drawing = false;
         function initCanvas() {
             canvas = document.getElementById('loveCanvas');
             ctx = canvas.getContext('2d');
-            ctx.strokeStyle = '#ff4b72';
-            ctx.lineWidth = 3;
-
+            ctx.strokeStyle = '#ff4b72'; ctx.lineWidth = 3;
             canvas.addEventListener('mousedown', () => drawing = true);
             canvas.addEventListener('mouseup', () => { drawing = false; ctx.beginPath(); });
             canvas.addEventListener('mousemove', draw);
-
-            // Mobil Dokunmatik Desteği
             canvas.addEventListener('touchstart', (e) => { drawing = true; e.preventDefault(); });
             canvas.addEventListener('touchend', () => { drawing = false; ctx.beginPath(); });
             canvas.addEventListener('touchmove', (e) => {
                 if(!drawing) return;
                 const rect = canvas.getBoundingClientRect();
-                const touch = e.touches[0];
-                ctx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
-                ctx.stroke();
-                e.preventDefault();
+                ctx.lineTo(e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top);
+                ctx.stroke(); e.preventDefault();
             });
         }
         function draw(e) {
             if (!drawing) return;
             const rect = canvas.getBoundingClientRect();
-            ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
-            ctx.stroke();
+            ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top); ctx.stroke();
         }
-        function clearCanvas() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
+        function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
 
-        // 📸 FOTOĞRAF YÜKLEME & LOCALSTORAGE
         function uploadPhoto(event) {
             const file = event.target.files[0];
             if (file) {
@@ -580,17 +386,14 @@
                     const slider = document.getElementById('gallerySlider');
                     const div = document.createElement('div');
                     div.className = 'polaroid';
-                    div.innerHTML = `<img src="${e.target.result}"><p style="font-family:'Dancing Script'; font-size: 1.2rem; margin-top:5px;">Yeni Anımız ❤️</p>`;
+                    div.innerHTML = `<img src="${e.target.result}"><p style="font-family:'Dancing Script'; font-size: 1.1rem; margin-top:4px;">Yeni Anımız ❤️</p>`;
                     slider.appendChild(div);
-                    savePhotosToLocal(e.target.result);
+                    let photos = JSON.parse(localStorage.getItem('ceyda_photos') || '[]');
+                    photos.push(e.target.result);
+                    localStorage.setItem('ceyda_photos', JSON.stringify(photos));
                 };
                 reader.readAsDataURL(file);
             }
-        }
-        function savePhotosToLocal(dataUrl) {
-            let photos = JSON.parse(localStorage.getItem('ceyda_photos') || '[]');
-            photos.push(dataUrl);
-            localStorage.setItem('ceyda_photos', JSON.stringify(photos));
         }
         function loadSavedPhotos() {
             let photos = JSON.parse(localStorage.getItem('ceyda_photos') || '[]');
@@ -598,49 +401,38 @@
             photos.forEach(src => {
                 const div = document.createElement('div');
                 div.className = 'polaroid';
-                div.innerHTML = `<img src="${src}"><p style="font-family:'Dancing Script'; font-size: 1.2rem; margin-top:5px;">Bizim Anımız ❤️</p>`;
+                div.innerHTML = `<img src="${src}"><p style="font-family:'Dancing Script'; font-size: 1.1rem; margin-top:4px;">Bizim Anımız ❤️</p>`;
                 slider.appendChild(div);
             });
         }
 
-        // MİNİ OYUNLAR MODAL YÖNETİMİ
         function openGame(gameType) {
             const modal = document.getElementById('gameModal');
             const container = document.getElementById('gameContainer');
             modal.style.display = 'flex';
-
             if(gameType === 'escapeBtn') {
                 container.innerHTML = `
                     <h3>Beni Ne Kadar Seviyorsun Ceyda'm?</h3>
-                    <div style="margin-top:30px; height: 150px; position:relative;">
-                        <button class="btn-love" style="width:auto; position:absolute; left:20%;" onclick="alert('Biliyordum! Ben de seni sonsuz seviyorum ❤️')">Çok Seviyorum ❤️</button>
-                        <button class="btn-love" id="escapeBtn" style="width:auto; position:absolute; right:20%; background:#888;" onmouseover="moveBtn(this)">Hiç Sevmiyorum 😜</button>
+                    <div style="margin-top:30px; height: 120px; position:relative;">
+                        <button class="btn-love" style="width:auto; position:absolute; left:10%;" onclick="alert('Ben de seni sonsuz seviyorum ❤️')">Çok Seviyorum ❤️</button>
+                        <button class="btn-love" id="escapeBtn" style="width:auto; position:absolute; right:10%; background:#888;" onmouseover="moveBtn(this)">Sevmiyorum 😜</button>
                     </div>
                 `;
             } else if(gameType === 'wheel') {
                 container.innerHTML = `
                     <h3>Aşk Çarkıfeleği</h3>
-                    <div id="wheelResult" style="font-size:1.3rem; font-weight:600; margin: 20px 0; color:var(--primary);">Çarkı Çevir!</div>
-                    <button class="btn-love" onclick="spinWheel()">Çevir 🎡</button>
+                    <div id="wheelResult" style="font-size:1.2rem; font-weight:600; margin: 20px 0; color:var(--primary);">Çarkı Çevir!</div>
+                    <button class="btn-love" style="width:auto;" onclick="spinWheel()">Çevir 🎡</button>
                 `;
             } else {
-                container.innerHTML = `<h3>Oyun Başlatıldı!</h3><p style="margin-top:15px;">Bu tatlı mini oyun Ceyda için hazırlandı ❤️</p>`;
+                container.innerHTML = `<h3>${gameType} Oyunu</h3><p style="margin-top:15px;">Ceyda için özel oyun alanı! ❤️</p>`;
             }
         }
-
-        function closeGame() {
-            document.getElementById('gameModal').style.display = 'none';
-        }
-
-        function moveBtn(btn) {
-            btn.style.top = Math.random() * 100 + 'px';
-            btn.style.left = Math.random() * 200 + 'px';
-        }
-
+        function closeGame() { document.getElementById('gameModal').style.display = 'none'; }
+        function moveBtn(btn) { btn.style.top = Math.random() * 80 + 'px'; btn.style.left = Math.random() * 150 + 'px'; }
         function spinWheel() {
-            const rewards = ["1 Tane Buse 😘", "Sarılma Cezası 🫂", "Tatlı Ismarlama 🍰", "Akşam Yürüyüşü 🌙", "Sonsuz Sevgi ❤️"];
-            const res = rewards[Math.floor(Math.random() * rewards.length)];
-            document.getElementById('wheelResult').innerText = "Kazanılan: " + res;
+            const rewards = ["1 Tane Öpücük 😘", "Sarılma Cezası 🫂", "Tatlı Ismarlama 🍰", "Akşam Yürüyüşü 🌙"];
+            document.getElementById('wheelResult').innerText = "Kazanılan: " + rewards[Math.floor(Math.random() * rewards.length)];
         }
     </script>
 </body>
