@@ -51,7 +51,7 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
             display: flex; justify-content: center; align-items: center;
-            z-index: 9999; transition: opacity 0.8s ease, visibility 0.8s;
+            z-index: 9999; transition: opacity 0.5s ease;
         }
         .login-card {
             background: white; padding: 40px 30px; border-radius: 24px;
@@ -107,13 +107,6 @@
         .jar-icon { font-size: 4.5rem; color: var(--primary); transition: transform 0.3s; }
         .jar-container:hover .jar-icon { transform: scale(1.1) rotate(6deg); }
 
-        /* KUPONLAR */
-        .coupons-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
-        .coupon-card {
-            background: #fff0f3; border: 2px dashed var(--primary); border-radius: 14px;
-            padding: 15px; text-align: center;
-        }
-
         /* 3D KARTLAR */
         .cards-3d { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
         .flip-card { height: 110px; perspective: 1000px; cursor: pointer; }
@@ -146,9 +139,15 @@
         }
         .polaroid img { width: 100%; height: 150px; object-fit: cover; border-radius: 4px; }
 
-        /* YOUTUBE VIDEO */
+        /* YOUTUBE VIDEO & BÖLÜMLER */
         .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px; }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+        .episode-buttons { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 15px; }
+        .btn-ep {
+            background: white; border: 2px solid var(--primary); color: var(--primary);
+            padding: 6px 14px; border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 0.85rem; transition: 0.2s;
+        }
+        .btn-ep:hover, .btn-ep.active { background: var(--primary); color: white; }
 
         /* MODAL */
         .modal {
@@ -157,10 +156,19 @@
             align-items: center; z-index: 10000; backdrop-filter: blur(4px);
         }
         .modal-content {
-            background: white; width: 90%; max-width: 500px; border-radius: 20px;
-            padding: 25px; position: relative; text-align: center;
+            background: white; width: 90%; max-width: 520px; border-radius: 20px;
+            padding: 25px; position: relative; text-align: center; max-height: 90vh; overflow-y: auto;
         }
         .close-btn { position: absolute; top: 12px; right: 18px; font-size: 1.6rem; cursor: pointer; color: #888; }
+
+        /* OYUN İÇİ STİLLER */
+        .memory-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 15px; }
+        .memory-card {
+            aspect-ratio: 1; background: var(--accent); border-radius: 10px; font-size: 2rem;
+            display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s;
+        }
+        .pop-container { height: 220px; position: relative; overflow: hidden; background: #fff0f3; border-radius: 12px; margin-top: 15px; }
+        .pop-heart { position: absolute; font-size: 2rem; color: var(--primary); cursor: pointer; user-select: none; }
     </style>
 </head>
 <body>
@@ -204,29 +212,6 @@
                 <p id="dailyNoteText" style="font-weight: 600; color: var(--dark); min-height: 25px; margin-top: 5px;"></p>
             </div>
 
-            <!-- AŞK KUPONLARI -->
-            <div class="glass-card">
-                <h2 class="section-title" style="margin-top: 0;"><i class="fa-solid fa-ticket"></i> Ceyda'ya Özel Kuponlar</h2>
-                <div class="coupons-grid">
-                    <div class="coupon-card">
-                        <h4>💆‍♂️ 20 Dk Masaj</h4>
-                        <button class="btn-love" style="padding: 4px 10px; font-size: 0.75rem; margin-top:8px;" onclick="alert('Kupon Kullanıldı! Hazırlanıyorum ❤️')">Kullan</button>
-                    </div>
-                    <div class="coupon-card">
-                        <h4>🍕 En Sevdiğin Yemek</h4>
-                        <button class="btn-love" style="padding: 4px 10px; font-size: 0.75rem; margin-top:8px;" onclick="alert('Kupon Kullanıldı! Mutfak benim ❤️')">Kullan</button>
-                    </div>
-                    <div class="coupon-card">
-                        <h4>🕊️ Tamamen Haklısın</h4>
-                        <button class="btn-love" style="padding: 4px 10px; font-size: 0.75rem; margin-top:8px;" onclick="alert('Kupon Kullanıldı! Haklısın birtanem ❤️')">Kullan</button>
-                    </div>
-                    <div class="coupon-card">
-                        <h4>🎬 Dizi/Film Seçimi</h4>
-                        <button class="btn-love" style="padding: 4px 10px; font-size: 0.75rem; margin-top:8px;" onclick="alert('Kupon Kullanıldı! Kumanda sende ❤️')">Kullan</button>
-                    </div>
-                </div>
-            </div>
-
             <!-- 3D NEDEN CEYDA KARTLARI -->
             <div class="glass-card">
                 <h2 class="section-title" style="margin-top: 0;"><i class="fa-solid fa-heart"></i> Seni Neden Çok Seviyorum?</h2>
@@ -241,13 +226,13 @@
             <!-- 8 MİNİ OYUN -->
             <h2 class="section-title"><i class="fa-solid fa-gamepad"></i> Mini Oyunlarımız (8 Tane)</h2>
             <div class="games-grid">
-                <div class="game-card" onclick="openGame('Kalp Yakalama')"><i class="fa-solid fa-hand-holding-heart"></i><h4>Kalp Yakalama</h4></div>
-                <div class="game-card" onclick="openGame('Aşk Hafızası')"><i class="fa-solid fa-brain"></i><h4>Aşk Hafızası</h4></div>
-                <div class="game-card" onclick="openGame('Aşk Quizi')"><i class="fa-solid fa-circle-question"></i><h4>Aşk Quizi</h4></div>
-                <div class="game-card" onclick="openGame('Kalp Patlat')"><i class="fa-solid fa-burst"></i><h4>Kalp Patlat</h4></div>
+                <div class="game-card" onclick="openGame('catcher')"><i class="fa-solid fa-hand-holding-heart"></i><h4>Kalp Yakalama</h4></div>
+                <div class="game-card" onclick="openGame('memory')"><i class="fa-solid fa-brain"></i><h4>Aşk Hafızası</h4></div>
+                <div class="game-card" onclick="openGame('quiz')"><i class="fa-solid fa-circle-question"></i><h4>Aşk Quizi</h4></div>
+                <div class="game-card" onclick="openGame('pop')"><i class="fa-solid fa-burst"></i><h4>Kalp Patlat</h4></div>
                 <div class="game-card" onclick="openGame('wheel')"><i class="fa-solid fa-dharmachakra"></i><h4>Aşk Çarkıfeleği</h4></div>
-                <div class="game-card" onclick="openGame('Aşk Yılanı')"><i class="fa-solid fa-staff-snake"></i><h4>Aşk Yılanı</h4></div>
-                <div class="game-card" onclick="openGame('Taş Kağıt Makas')"><i class="fa-solid fa-hand-scissors"></i><h4>Taş Kağıt Makas</h4></div>
+                <div class="game-card" onclick="openGame('snake')"><i class="fa-solid fa-staff-snake"></i><h4>Aşk Yılanı</h4></div>
+                <div class="game-card" onclick="openGame('rps')"><i class="fa-solid fa-hand-scissors"></i><h4>Taş Kağıt Makas</h4></div>
                 <div class="game-card" onclick="openGame('escapeBtn')"><i class="fa-solid fa-face-kiss-wink-heart"></i><h4>Beni Seviyor musun?</h4></div>
             </div>
 
@@ -275,14 +260,23 @@
                 </div>
             </div>
 
-            <!-- İNADINA AŞK DİZİ İZLEME -->
+            <!-- İNADINA AŞK DİZİ İZLEME VE BÖLÜM SEÇİCİ -->
             <div class="glass-card">
                 <h2 class="section-title" style="margin-top: 0;"><i class="fa-solid fa-tv"></i> İnadına Aşk İzleme Alanımız</h2>
                 <div class="video-container">
-                    <iframe src="https://www.youtube-nocookie.com/embed/5pLiSY5l8uE?rel=0&modestbranding=1" allowfullscreen></iframe>
+                    <iframe id="seriesIframe" src="https://www.youtube-nocookie.com/embed/5pLiSY5l8uE?rel=0&modestbranding=1" allowfullscreen></iframe>
                 </div>
-                <div style="text-align: center; margin-top: 12px;">
-                    <a href="https://www.youtube.com/watch?v=5pLiSY5l8uE" target="_blank" class="btn-love" style="width: auto; font-size:0.85rem; padding: 8px 20px;">
+
+                <!-- BÖLÜM SEÇME BUTONLARI -->
+                <div class="episode-buttons">
+                    <button class="btn-ep active" onclick="changeEpisode('5pLiSY5l8uE', this)">1. Bölüm</button>
+                    <button class="btn-ep" onclick="changeEpisode('k1X8xW9E_gI', this)">2. Bölüm</button>
+                    <button class="btn-ep" onclick="changeEpisode('I9S2p2iK0iE', this)">3. Bölüm</button>
+                    <button class="btn-ep" onclick="changeEpisode('videoseries?list=PLBkw3_T3W_m0u44pI29kU0YJ4Jm5pYv7m', this)">Playlist Oynat</button>
+                </div>
+
+                <div style="text-align: center; margin-top: 15px;">
+                    <a id="ytDirectLink" href="https://www.youtube.com/watch?v=5pLiSY5l8uE" target="_blank" class="btn-love" style="width: auto; font-size:0.85rem; padding: 8px 20px;">
                         <i class="fa-brands fa-youtube"></i> YouTube Uygulamasında Aç
                     </a>
                 </div>
@@ -303,22 +297,25 @@
         function checkPin() {
             const input = document.getElementById('pinInput').value;
             const error = document.getElementById('errorMessage');
+            
             if (input === '2386') {
-                document.getElementById('login-screen').style.opacity = '0';
-                setTimeout(() => {
-                    document.getElementById('login-screen').style.display = 'none';
-                    const main = document.getElementById('main-content');
-                    main.style.display = 'block';
-                    setTimeout(() => main.style.opacity = '1', 50);
-                    startTimer();
-                    initCanvas();
-                    loadSavedPhotos();
-                }, 800);
+                document.getElementById('login-screen').style.display = 'none';
+                const main = document.getElementById('main-content');
+                main.style.display = 'block';
+                main.style.opacity = '1';
+                
+                startTimer();
+                initCanvas();
+                loadSavedPhotos();
             } else {
                 error.style.display = 'block';
                 error.innerText = 'Yanlış Şifre Ceyda\'m! ❤';
             }
         }
+
+        document.getElementById('pinInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') checkPin();
+        });
 
         function startTimer() {
             const startDate = new Date('2023-01-01T00:00:00');
@@ -354,9 +351,22 @@
             document.getElementById('dailyNoteText').innerText = dailyNotes[Math.floor(Math.random() * dailyNotes.length)];
         }
 
+        /* DİZİ BÖLÜM DEĞİŞTİRME */
+        function changeEpisode(videoPath, btn) {
+            document.querySelectorAll('.btn-ep').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const iframe = document.getElementById('seriesIframe');
+            const directLink = document.getElementById('ytDirectLink');
+            
+            iframe.src = `https://www.youtube-nocookie.com/embed/${videoPath}?rel=0&modestbranding=1`;
+            directLink.href = `https://www.youtube.com/watch?v=${videoPath}`;
+        }
+
+        /* ÇİZİM TUVALİ */
         let canvas, ctx, drawing = false;
         function initCanvas() {
             canvas = document.getElementById('loveCanvas');
+            if(!canvas) return;
             ctx = canvas.getContext('2d');
             ctx.strokeStyle = '#ff4b72'; ctx.lineWidth = 3;
             canvas.addEventListener('mousedown', () => drawing = true);
@@ -376,8 +386,9 @@
             const rect = canvas.getBoundingClientRect();
             ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top); ctx.stroke();
         }
-        function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
+        function clearCanvas() { if(ctx) ctx.clearRect(0, 0, canvas.width, canvas.height); }
 
+        /* GALERİ */
         function uploadPhoto(event) {
             const file = event.target.files[0];
             if (file) {
@@ -406,33 +417,199 @@
             });
         }
 
+        /* 8 MİNİ OYUN MANTIĞI */
+        let gameInterval = null;
+
         function openGame(gameType) {
             const modal = document.getElementById('gameModal');
             const container = document.getElementById('gameContainer');
             modal.style.display = 'flex';
+            clearInterval(gameInterval);
+
             if(gameType === 'escapeBtn') {
                 container.innerHTML = `
                     <h3>Beni Ne Kadar Seviyorsun Ceyda'm?</h3>
-                    <div style="margin-top:30px; height: 120px; position:relative;">
+                    <div style="margin-top:30px; height: 140px; position:relative;">
                         <button class="btn-love" style="width:auto; position:absolute; left:10%;" onclick="alert('Ben de seni sonsuz seviyorum ❤️')">Çok Seviyorum ❤️</button>
-                        <button class="btn-love" id="escapeBtn" style="width:auto; position:absolute; right:10%; background:#888;" onmouseover="moveBtn(this)">Sevmiyorum 😜</button>
+                        <button class="btn-love" id="escapeBtn" style="width:auto; position:absolute; right:10%; background:#888;" onmouseover="moveBtn(this)" onclick="moveBtn(this)">Sevmiyorum 😜</button>
                     </div>
                 `;
-            } else if(gameType === 'wheel') {
+            } 
+            else if(gameType === 'wheel') {
                 container.innerHTML = `
                     <h3>Aşk Çarkıfeleği</h3>
                     <div id="wheelResult" style="font-size:1.2rem; font-weight:600; margin: 20px 0; color:var(--primary);">Çarkı Çevir!</div>
                     <button class="btn-love" style="width:auto;" onclick="spinWheel()">Çevir 🎡</button>
                 `;
-            } else {
-                container.innerHTML = `<h3>${gameType} Oyunu</h3><p style="margin-top:15px;">Ceyda için özel oyun alanı! ❤️</p>`;
+            }
+            else if(gameType === 'quiz') {
+                container.innerHTML = `
+                    <h3>Aşk Quizi ❤️</h3>
+                    <p style="margin-top:10px;">Benim en sevdiğim özelliğin nedir?</p>
+                    <div style="display:flex; flex-direction:column; gap:8px; margin-top:15px;">
+                        <button class="btn-love" style="background:white; color:var(--primary); border:1px solid var(--primary);" onclick="alert('Doğru cevap! Hepsi benim için çok özel ❤️')">A) Sıcacık Gülüşün</button>
+                        <button class="btn-love" style="background:white; color:var(--primary); border:1px solid var(--primary);" onclick="alert('Doğru cevap! Hepsi benim için çok özel ❤️️')">B) Kocaman Merhametli Kalbin</button>
+                        <button class="btn-love" style="background:white; color:var(--primary); border:1px solid var(--primary);" onclick="alert('Doğru cevap! Hepsi benim için çok özel ❤️')">C) Hepsi!</button>
+                    </div>
+                `;
+            }
+            else if(gameType === 'rps') {
+                container.innerHTML = `
+                    <h3>Taş Kağıt Makas ✌️</h3>
+                    <p style="margin: 10px 0;">Seçimini yap:</p>
+                    <div style="display:flex; justify-content:center; gap:10px;">
+                        <button class="btn-love" style="width:auto;" onclick="playRPS('Taş')">🪨 Taş</button>
+                        <button class="btn-love" style="width:auto;" onclick="playRPS('Kağıt')">📄 Kağıt</button>
+                        <button class="btn-love" style="width:auto;" onclick="playRPS('Makas')">✂️ Makas</button>
+                    </div>
+                    <div id="rpsResult" style="margin-top:15px; font-weight:600; color:var(--primary);"></div>
+                `;
+            }
+            else if(gameType === 'memory') {
+                const icons = ['❤️', '❤️', '✨', '✨', '🌹', '🌹', '💖', '💖'];
+                icons.sort(() => 0.5 - Math.random());
+                container.innerHTML = `
+                    <h3>Aşk Hafızası 🧠</h3>
+                    <div class="memory-grid" id="memoryGrid"></div>
+                `;
+                const grid = document.getElementById('memoryGrid');
+                let flipped = [];
+                icons.forEach((icon, idx) => {
+                    const card = document.createElement('div');
+                    card.className = 'memory-card';
+                    card.innerText = '❓';
+                    card.onclick = () => {
+                        if(flipped.length < 2 && card.innerText === '❓') {
+                            card.innerText = icon;
+                            flipped.push({card, icon});
+                            if(flipped.length === 2) {
+                                if(flipped[0].icon === flipped[1].icon) {
+                                    flipped = [];
+                                } else {
+                                    setTimeout(() => {
+                                        flipped[0].card.innerText = '❓';
+                                        flipped[1].card.innerText = '❓';
+                                        flipped = [];
+                                    }, 800);
+                                }
+                            }
+                        }
+                    };
+                    grid.appendChild(card);
+                });
+            }
+            else if(gameType === 'pop') {
+                container.innerHTML = `
+                    <h3>Kalp Patlat ❤️</h3>
+                    <p>Skor: <span id="popScore">0</span></p>
+                    <div class="pop-container" id="popBox"></div>
+                `;
+                let score = 0;
+                gameInterval = setInterval(() => {
+                    const box = document.getElementById('popBox');
+                    if(!box) return;
+                    const heart = document.createElement('div');
+                    heart.className = 'pop-heart';
+                    heart.innerHTML = '❤️';
+                    heart.style.left = Math.random() * 80 + '%';
+                    heart.style.top = Math.random() * 80 + '%';
+                    heart.onclick = () => {
+                        score++;
+                        document.getElementById('popScore').innerText = score;
+                        heart.remove();
+                    };
+                    box.appendChild(heart);
+                    setTimeout(() => heart.remove(), 1500);
+                }, 800);
+            }
+            else if(gameType === 'catcher') {
+                container.innerHTML = `
+                    <h3>Kalp Yakalama 🧺</h3>
+                    <p>Skor: <span id="catchScore">0</span></p>
+                    <div class="pop-container" id="catchBox">
+                        <div id="basket" style="position:absolute; bottom:5px; left:40%; font-size:2rem;">🧺</div>
+                    </div>
+                `;
+                let score = 0;
+                const box = document.getElementById('catchBox');
+                const basket = document.getElementById('basket');
+                
+                box.onmousemove = (e) => {
+                    const rect = box.getBoundingClientRect();
+                    basket.style.left = (e.clientX - rect.left - 20) + 'px';
+                };
+
+                gameInterval = setInterval(() => {
+                    if(!box) return;
+                    const item = document.createElement('div');
+                    item.innerText = '❤️';
+                    item.style.position = 'absolute'; item.style.top = '0px';
+                    item.style.left = Math.random() * 90 + '%';
+                    box.appendChild(item);
+
+                    let top = 0;
+                    const fall = setInterval(() => {
+                        top += 5; item.style.top = top + 'px';
+                        if(top > 180) {
+                            score++;
+                            const scoreEl = document.getElementById('catchScore');
+                            if(scoreEl) scoreEl.innerText = score;
+                            clearInterval(fall); item.remove();
+                        }
+                    }, 50);
+                }, 1000);
+            }
+            else if(gameType === 'snake') {
+                container.innerHTML = `
+                    <h3>Aşk Yılanı 🐍</h3>
+                    <p>Kalpleri Topla!</p>
+                    <div style="width:200px; height:200px; background:#fff0f3; margin:10px auto; position:relative; border-radius:10px;" id="snakeArea">
+                        <div id="snakeHead" style="position:absolute; top:90px; left:90px; font-size:1.2rem;">🐍</div>
+                        <div id="snakeFood" style="position:absolute; top:30px; left:30px; font-size:1.2rem;">❤️</div>
+                    </div>
+                    <div>
+                        <button class="btn-ep" onclick="moveSnake('up')">⬆️</button><br>
+                        <button class="btn-ep" onclick="moveSnake('left')">⬅️</button>
+                        <button class="btn-ep" onclick="moveSnake('right')">➡️</button><br>
+                        <button class="btn-ep" onclick="moveSnake('down')">⬇️</button>
+                    </div>
+                `;
             }
         }
-        function closeGame() { document.getElementById('gameModal').style.display = 'none'; }
-        function moveBtn(btn) { btn.style.top = Math.random() * 80 + 'px'; btn.style.left = Math.random() * 150 + 'px'; }
+
+        function closeGame() { 
+            document.getElementById('gameModal').style.display = 'none'; 
+            clearInterval(gameInterval);
+        }
+
+        function moveBtn(btn) { 
+            btn.style.top = Math.random() * 80 + 'px'; 
+            btn.style.left = Math.random() * 150 + 'px'; 
+        }
+
         function spinWheel() {
             const rewards = ["1 Tane Öpücük 😘", "Sarılma Cezası 🫂", "Tatlı Ismarlama 🍰", "Akşam Yürüyüşü 🌙"];
             document.getElementById('wheelResult').innerText = "Kazanılan: " + rewards[Math.floor(Math.random() * rewards.length)];
+        }
+
+        function playRPS(user) {
+            const options = ['Taş', 'Kağıt', 'Makas'];
+            const bot = options[Math.floor(Math.random() * options.length)];
+            let res = "";
+            if(user === bot) res = "Berabere! Tekrar dene ❤️";
+            else res = `Sen: ${user} - Ben: ${bot}. Ceyda kazandı! 🎉`;
+            document.getElementById('rpsResult').innerText = res;
+        }
+
+        let sX = 90, sY = 90;
+        function moveSnake(dir) {
+            if(dir==='up') sY -= 20; if(dir==='down') sY += 20;
+            if(dir==='left') sX -= 20; if(dir==='right') sX += 20;
+            const head = document.getElementById('snakeHead');
+            if(head) {
+                head.style.left = sX + 'px';
+                head.style.top = sY + 'px';
+            }
         }
     </script>
 </body>
